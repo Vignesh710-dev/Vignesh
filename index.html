@@ -437,7 +437,7 @@
                 const formData = new FormData(event.target);
                 const data = Object.fromEntries(formData);
         
-                await fetch('/contact', {
+                const response = await fetch('/contact', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -445,27 +445,34 @@
                     body: JSON.stringify(data)
                 });
         
-                Swal.fire({
-                    title: 'Success!',
-                    text: 'Form submitted successfully. Our team will contact you shortly.',
-                    icon: 'success',
-                    showConfirmButton: false,
-                    timer: 2000
-                });
-                
-                event.target.reset();
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+        
+                const result = await response.json();
+        
+                if (result.success) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Form submitted successfully. Our team will contact you shortly.',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                    
+                    event.target.reset();
+                } else {
+                    throw new Error('Form submission failed');
+                }
                 
             } catch (error) {
-                console.log('Error:', error);
+                console.error('Error:', error);
                 Swal.fire({
-                    title: 'Success!',
-                    text: 'Form submitted successfully. Our team will contact you shortly.',
-                    icon: 'success',
-                    showConfirmButton: false,
-                    timer: 2000
+                    title: 'Error!',
+                    text: 'There was an issue submitting the form. Please try again.',
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
                 });
-                
-                event.target.reset();
             }
         }
         </script>
@@ -474,16 +481,11 @@
             duration: 800,
             once:true,
             offset: 50,
-            disable: function(){
-              return window.innerWidth<768;
-            },
+            disable:window.innerWidth<76,
             easing: 'ease-out',
             mirror:false,
             anchorPlacement: 'top-bottom'
           });
-          window.addEventListener(DOMcontentLoaded,function(){
-            AOS.refresh();
-          })
         </script>
        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>  
     <script>
