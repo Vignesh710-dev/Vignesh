@@ -1,58 +1,57 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const twilio = require('twilio');
+const nodemailer = require('nodemailer');
+const cors = require('cors');
 const app = express();
-const port = 3000;
 
-// Get local IP address
-const { networkInterfaces } = require('os');
-const nets = networkInterfaces();
-const localIP = Object.values(nets)
-    .flat()
-    .filter(item => !item.internal && item.family === 'IPv4')
-    [0].address;
+app.use(cors());
+app.use(express.json());
 
-// Twilio Configuration
-const twilioClient = twilio(
-    'AC905534ff99d346039e209ba729728a1a',
-     '9193e58363b05b477723ac3cc84f5bee'
-);
+// Create email transporter
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'vigneshpk710@gmail.com', // Your Gmail address
+        pass: 'czdi jcuf ibmx lxvd' // Gmail app-specific password
+    }
+});
 
-app.use(express.static('.'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// Handle contact form submissions
-app.post('/contact', async (req, res) => {
-    const { name, email, phone, city } = req.body;
-    
+app.post('/api/contact', async (req, res) => {
     try {
-        const message = await twilioClient.messages.create({
-            body: `New Gym Inquiry:
-Name: ${name}
-Email: ${email}
-Phone: ${phone}
-City: ${city}`,
-            from: 'whatsapp:+14155238886',
-            to: 'whatsapp:+919080700642'
-        });
-        
-        console.log('Message sent successfully:', message.sid);
+        const { name, phone, email, city } = req.body;
+        console.log('Received form data:', { name, phone, email, city });
+
+        // Email content
+        const mailOptions = {
+            from: 'vigneshpk710@gmail.com',
+            to: 'vigneshvcoder@gmail.com', // Your email where you want to receive notifications
+            subject: 'New Gym Registration',
+            text: `
+                New Registration Details:
+                
+                Name: ${name}
+                Email: ${email}
+                Phone: ${phone}
+                City: ${city}
+                
+                Time: ${new Date().toLocaleString()}
+            `
+        };
+
+        // Send email
+        await transporter.sendMail(mailOptions);
+        console.log('Email notification sent');
+
         res.json({ success: true });
     } catch (error) {
-        console.error('Twilio Error:', error.message);
-        console.error('Error Code:', error.code);
-        console.error('More Info:', error.moreInfo);
+        console.error('Error:', error);
         res.status(500).json({ 
             success: false, 
-            error: error.message 
+            message: error.message || 'Failed to process registration'
         });
     }
 });
 
-// Listen on all network interfaces
-app.listen(port, '0.0.0.0', () => {
-    console.log(`Server running at:`);
-    console.log(`- http://localhost:${port}`);
-    console.log(`- http://${localIP}:${port}`);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });

@@ -268,3 +268,41 @@ html {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+
+
+.animated-submit-btn {
+    background: linear-gradient(45deg, #ff1a1a, #cc0000);
+    border: none;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    z-index: 1;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.animated-submit-btn:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #cc0000, #ff1a1a);
+    transition: all 0.4s ease;
+    z-index: -1;
+}
+
+.animated-submit-btn:hover:before {
+    left: 0;
+}
+
+.animated-submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+}
+
+.animated-submit-btn:active {
+    transform: translateY(1px);
+}

@@ -5,6 +5,7 @@
     "body-parser": "^2.2.0",
     "bootstrap": "^5.3.5",
     "bootstrap-icons": "^1.11.3",
+    "cors": "^2.8.5",
     "express": "^5.1.0",
     "font-awesome": "^4.7.0",
     "fs": "^0.0.1-security",
@@ -26,5 +27,13 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "gym ramand",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vignesh710-dev/Vignesh.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Vignesh710-dev/Vignesh/issues"
+  },
+  "homepage": "https://github.com/Vignesh710-dev/Vignesh#readme"
 }
