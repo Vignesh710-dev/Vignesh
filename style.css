@@ -1,0 +1,270 @@
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Caveat:wght@400;700&family=Lobster&family=Monoton&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display+SC:ital,wght@0,400;0,700;1,700&family=Playfair+Display:ital,wght@0,400;0,700;1,700&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&family=Source+Sans+Pro:ital,wght@0,400;0,700;1,700&family=Work+Sans:ital,wght@0,400;0,700;1,700&display=swap');
+@import url('animate.css');
+@import "font-awesome-sprockets";
+@import "font-awesome";
+@import 'sweetalert2/src/sweetalert2.scss';
+
+.box:hover{
+    transform: scale(1.1);
+    transition: 0s;
+}
+.box2:hover{
+    transform: scale(1.1);
+    transition: 0s;
+}
+.back_img{
+    background-image:url('Background/back.imge.jpg');
+    height:95vh;
+    background-size: cover;
+}
+.first_heading{
+    font-family:"sans-serif";
+    font-size:50px;
+    font-weight: bold;
+    color:#fff
+}
+span{
+    color:brown;
+}
+button{
+    background-color: rgb(158, 25, 29);
+    font-family:"sans-serif";
+    border-width:0px;
+    border-radius:5px;
+    width: 130px;
+    height: 45px;
+    color:#fff;
+}
+.logo-image{
+    width:80px;
+    height:70px;
+}
+.container2{
+    background-color: #2b2b2b;
+}
+p{
+    color:#fff;
+    font-weight: 20px;
+}
+.vicky{
+    background-color: #e7074b;
+    border-radius:50%;
+    padding:5px;
+    font-size: 30px;
+    text-align: center;
+}   
+.secound-heading{
+    font-family: 'sans-serif';
+    font-weight: bold;
+    font-size: 20px;
+    color:#fff;
+}
+.f-p{
+    color: #5e5d5d;
+    font-weight:bold;
+
+}
+.navbar{
+    background-color: transparent;
+    backdrop-filter: blur(20px);
+}
+.threed-heading{
+    font-family:"sans-serif";
+    font-size:30px;
+    font-weight: bold;
+    color:#fff
+}
+.cc-con{
+    width:40px;
+    height: 40px;
+}
+.four-heading{
+    font-family:"sans-serif";
+    font-size:20px;
+    font-weight: bold;
+    color:#fff;
+ 
+}
+.container3{
+    background-color: #151515;
+}
+.logo-2-imge{
+    width:130px;
+    height:100px;
+    border-radius: 50%;
+}
+
+
+.form-control{
+    width: 500px;
+}
+.copy2{
+    color:#fff;
+    font-size: 17px;
+    text-align: center;
+    background-color: #151515;
+    padding: 10px;
+}
+.container4{
+    background-color: #151515;
+}
+
+
+/* Responsive text sizes */
+@media (max-width: 768px) {
+    .first_heading {
+        font-size: 2rem;
+    }
+    
+    .secound-heading {
+        font-size: 1.5rem;
+    }
+    
+    .threed-heading {
+        font-size: 1.8rem;
+    }
+    
+    .four-heading {
+        font-size: 1.5rem;
+    }
+    
+    /* Adjust padding for mobile */
+    .container2, .container3, .container4 {
+        padding: 2rem 1rem;
+    }
+    
+    /* Make images responsive */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    /* Adjust form width */
+    form {
+        width: 100%;
+        padding: 1rem;
+    }
+    
+    /* Fix spacing issues */
+    .mb-4 {
+        margin-bottom: 1.5rem !important;
+    }
+}
+
+/* Fix image sizes on all devices */
+.logo-image {
+    max-height: 50px;
+    width: auto;
+}
+
+.logo-2-imge {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Form Styles */
+/* Form Responsive Styles */
+#contactForm {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+}
+
+#contactForm .form-group {
+    margin-bottom: 1.5rem;
+}
+
+#contactForm input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.9);
+}
+
+#contactForm label {
+    display: block;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    #contactForm {
+        padding: 15px;
+        margin: 10px;
+    }
+    
+    #contactForm input {
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    #contactForm {
+        padding: 10px;
+    }
+}
+
+/* AOS Animation Styles */
+[data-aos] {
+    visibility: hidden;
+}
+
+[data-aos].aos-animate {
+    visibility: visible;
+}
+
+/* Ensure animations work on mobile */
+@media screen and (max-width: 768px) {
+    [data-aos] {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
+
+/* Optional: Add custom animation classes */
+.zoom-in-custom {
+    transition-property: transform, opacity;
+}
+
+.zoom-in-custom.aos-animate {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* Add smooth transitions */
+.btn, .vicky, .logo-2-imge {
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.vicky:hover {
+    transform: scale(1.1);
+}
+
+.logo-2-imge:hover {
+    transform: rotate(5deg);
+}
+
+/* Smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Fade in animation for content */
+.fade-in {
+    animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
