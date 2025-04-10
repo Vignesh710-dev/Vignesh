@@ -1,7 +1,7 @@
  <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
@@ -12,6 +12,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <title>Muvi Fitnees</title>
     <link rel="logo" type="logo/bng" href="Logo/muvi.lofo.jpg">
+    <style>
+      @media (max-width: 768px) {
+          [data-aos] {
+              transition-duration: 600ms !important;
+              transform: translateZ(0) !important;
+              -webkit-transform: translateZ(0) !important;
+              perspective: 1000 !important;
+              -webkit-perspective: 1000 !important;
+          }
+          
+          .animate__animated {
+              animation-duration: 0.8s !important;
+          }
+      }
+  </style>
     
 </head>
 <body>
@@ -456,14 +471,19 @@
         </script>
         <script>
           AOS.init({
-            duration: 1000,
-            once: false,
-            offset: 120,
-            delay: 100,
-            easing: 'ease-in-out',
-            mirror: true,
+            duration: 800,
+            once:true,
+            offset: 50,
+            disable: function(){
+              return window.innerWidth<768;
+            },
+            easing: 'ease-out',
+            mirror:false,
             anchorPlacement: 'top-bottom'
           });
+          window.addEventListener(DOMcontentLoaded,function(){
+            AOS.refresh();
+          })
         </script>
        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>  
     <script>

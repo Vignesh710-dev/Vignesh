@@ -27,7 +27,7 @@ app.post('/contact', async (req, res) => {
     const { name, email, phone, city } = req.body;
     
     try {
-        await twilioClient.messages.create({
+        const message = await twilioClient.messages.create({
             body: `New Gym Inquiry:
 Name: ${name}
 Email: ${email}
@@ -36,11 +36,17 @@ City: ${city}`,
             from: 'whatsapp:+14155238886',
             to: 'whatsapp:+919080700642'
         });
-
+        
+        console.log('Message sent successfully:', message.sid);
         res.json({ success: true });
     } catch (error) {
-        console.error('Error:', error);
-        res.json({ success: true }); // Still return success for popup
+        console.error('Twilio Error:', error.message);
+        console.error('Error Code:', error.code);
+        console.error('More Info:', error.moreInfo);
+        res.status(500).json({ 
+            success: false, 
+            error: error.message 
+        });
     }
 });
 
