@@ -223,11 +223,12 @@
             localStorage.setItem('users', JSON.stringify(users));
     
             // Store user details
+            // Inside handleRegister function, update the userDetails storage:
             userDetails[username] = {
                 fullName: fullName,
                 email: email,
                 phone: phone,
-                registrationDate: new Date().toLocaleString()
+                registrationDate: new Date().toISOString() // Changed to ISO format
             };
             localStorage.setItem('userDetails', JSON.stringify(userDetails));
     
@@ -306,6 +307,18 @@
             window.location.href = username === 'admin' ? 'admin-dashboard.html' : 'index.html';
         }
 
+        // Keep only this version of the recordLogin function
+        function recordLogin(username) {
+            const loginHistory = JSON.parse(localStorage.getItem('loginHistory') || '[]');
+            const loginRecord = {
+                username: username,
+                timestamp: new Date().toISOString(),
+                device: `${navigator.platform} - ${navigator.userAgent}`
+            };
+            loginHistory.push(loginRecord);
+            localStorage.setItem('loginHistory', JSON.stringify(loginHistory));
+        }
+
         // Update the handleLogin function
         function handleLogin(event) {
             event.preventDefault();
@@ -313,11 +326,12 @@
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             const users = JSON.parse(localStorage.getItem('users') || '{}');
-    
+        
             if (username === 'admin' && password === 'admin123') {
+                // Admin login
+                recordLogin('admin');
+                localStorage.setItem('currentUser', 'admin');
                 localStorage.setItem('isLoggedIn', 'true');
-                localStorage.setItem('currentUser', username);
-                recordLogin(username); // Add this line
                 
                 Swal.fire({
                     title: 'Success!',
@@ -326,12 +340,13 @@
                     timer: 1500,
                     showConfirmButton: false
                 }).then(() => {
-                    window.location.href = 'admin-dashboard.html'; // Changed to admin dashboard
+                    window.location.href = 'admin-dashboard.html';
                 });
             } else if (users[username] && users[username] === password) {
-                localStorage.setItem('isLoggedIn', 'true');
+                // User login
+                recordLogin(username);
                 localStorage.setItem('currentUser', username);
-                recordLogin(username); // Add this line
+                localStorage.setItem('isLoggedIn', 'true');
                 
                 Swal.fire({
                     title: 'Success!',

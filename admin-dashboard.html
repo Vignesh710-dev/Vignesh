@@ -161,14 +161,49 @@
         function displayAdmissions() {
             const admissionsList = document.getElementById('admissionsList');
             const admissions = JSON.parse(localStorage.getItem('admissions') || '[]');
-            let html = '';
-        
+            
+            // Add training mode statistics at the top
+            const modeStats = {
+                online: admissions.filter(a => a.mode === 'online').length,
+                offline: admissions.filter(a => a.mode === 'offline').length
+            };
+
+            let html = `
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="stats-card">
+                            <h3><i class="fas fa-dumbbell"></i> Offline Training</h3>
+                            <div class="stat-number">${modeStats.offline}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="stats-card">
+                            <h3><i class="fas fa-laptop"></i> Online Training</h3>
+                            <div class="stat-number">${modeStats.online}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
             admissions.reverse().forEach(admission => {
+                const packageStatus = getPackageStatusStyle(admission.package);
+                const modeIcon = admission.mode === 'online' ? 'fas fa-laptop' : 'fas fa-dumbbell';
+                const modeBadge = admission.mode === 'online' ? 'bg-info' : 'bg-warning';
+                
                 html += `
                     <div class="user-card">
                         <div class="d-flex justify-content-between align-items-center">
                             <h4><i class="fas fa-user"></i> ${admission.name}</h4>
-                            <span class="badge bg-success">New Application</span>
+                            <div>
+                                <span class="badge ${packageStatus.class}">${admission.package}</span>
+                                <span class="badge ${modeBadge} ms-2">
+                                    <i class="${modeIcon}"></i> ${admission.mode ? admission.mode.charAt(0).toUpperCase() + admission.mode.slice(1) : 'Not Specified'}
+                                </span>
+                                ${admission.status ? 
+                                    `<span class="badge bg-${admission.status === 'approved' ? 'success' : 'danger'} ms-2">${admission.status}</span>` : 
+                                    '<span class="badge bg-secondary ms-2">Pending</span>'
+                                }
+                            </div>
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-6">
@@ -177,14 +212,49 @@
                             </div>
                             <div class="col-md-6">
                                 <p><i class="fas fa-map-marker-alt"></i> City: ${admission.city}</p>
-                                <p><i class="fas fa-dumbbell"></i> Package: ${admission.package}</p>
+                                <p><i class="fas fa-clock"></i> Applied: ${new Date(admission.timestamp).toLocaleString()}</p>
                             </div>
+                        </div>
+                        <div class="mt-2">
+                            <button class="btn btn-sm btn-success me-2" onclick="updateAdmissionStatus('${admission.email}', 'approved')">
+                                <i class="fas fa-check"></i> Approve
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="updateAdmissionStatus('${admission.email}', 'rejected')">
+                                <i class="fas fa-times"></i> Reject
+                            </button>
                         </div>
                     </div>
                 `;
             });
-        
+
             admissionsList.innerHTML = html || '<p class="text-center">No admission applications</p>';
+        }
+
+        // Add this helper function
+        function getPackageStatusStyle(package) {
+            switch(package.toLowerCase()) {
+                case 'premium':
+                    return { class: 'bg-warning text-dark' };
+                case 'platinum':
+                    return { class: 'bg-info' };
+                case 'gold':
+                    return { class: 'bg-warning' };
+                default:
+                    return { class: 'bg-secondary' };
+            }
+        }
+
+        // Add this function to handle admission status updates
+        function updateAdmissionStatus(email, status) {
+            const admissions = JSON.parse(localStorage.getItem('admissions') || '[]');
+            const index = admissions.findIndex(a => a.email === email);
+            
+            if (index !== -1) {
+                admissions[index].status = status;
+                admissions[index].updateTime = new Date().toISOString();
+                localStorage.setItem('admissions', JSON.stringify(admissions));
+                displayAdmissions();
+            }
         }
 
         function updateDashboard() {
@@ -194,12 +264,40 @@
             updateStatistics();
         }
 
+        function updateStatistics() {
+            try {
+                const userDetails = JSON.parse(localStorage.getItem('userDetails') || '{}');
+                const loginHistory = JSON.parse(localStorage.getItem('loginHistory') || '[]');
+                
+                // Total Users (excluding admin)
+                const totalUsers = Object.keys(userDetails).length;
+                document.getElementById('totalUsers').textContent = totalUsers;
+                
+                // Today's Logins
+                const today = new Date().toDateString();
+                const todayLogins = loginHistory.filter(log => 
+                    new Date(log.timestamp).toDateString() === today
+                ).length;
+                document.getElementById('todayLogins').textContent = todayLogins;
+                
+                // New Users This Week
+                const weekAgo = new Date();
+                weekAgo.setDate(weekAgo.getDate() - 7);
+                const newUsers = Object.values(userDetails).filter(user => 
+                    new Date(user.registrationDate) > weekAgo
+                ).length;
+                document.getElementById('newUsers').textContent = newUsers;
+            } catch (error) {
+                console.error('Error updating statistics:', error);
+            }
+        }
+
         function displayUserDetails() {
             const userDetails = JSON.parse(localStorage.getItem('userDetails') || '{}');
             const userDetailsList = document.getElementById('userDetailsList');
             let html = '';
         
-            userDetails.reverse().forEach(details => {
+            Object.entries(userDetails).forEach(([username, details]) => {
                 html += `
                     <div class="user-card">
                         <div class="d-flex justify-content-between align-items-center">
@@ -215,7 +313,7 @@
                             </div>
                             <div class="col-md-6">
                                 <p><i class="fas fa-phone"></i> Phone: ${details.phone}</p>
-                                <p><i class="fas fa-calendar-alt"></i> Registered: ${details.registrationDate}</p>
+                                <p><i class="fas fa-calendar-alt"></i> Registered: ${new Date(details.registrationDate).toLocaleString()}</p>
                             </div>
                         </div>
                     </div>
@@ -232,20 +330,13 @@
         
             loginHistory.reverse().forEach(entry => {
                 const date = new Date(entry.timestamp);
-                const deviceInfo = entry.device.split(' - ');
-                const platform = deviceInfo[0];
-                const browser = deviceInfo[1].split('/')[0];
-                
                 html += `
                     <div class="login-record">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5><i class="fas fa-user-clock"></i> ${entry.username}</h5>
                             <span class="text-muted">${date.toLocaleString()}</span>
                         </div>
-                        <p class="mb-0">
-                            <i class="fas fa-desktop"></i> Platform: ${platform}
-                            <i class="fas fa-browser ml-2"></i> Browser: ${browser}
-                        </p>
+                        <p class="mb-0"><i class="fas fa-desktop"></i> ${entry.device}</p>
                     </div>
                 `;
             });
@@ -286,3 +377,5 @@
     </script>
 </body>
 </html>
+
+

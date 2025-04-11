@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muvi Fitness - Blog</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background: #0f0f0f;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .hero-section {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)),
+                        url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            animation: gradientShift 10s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-color: rgba(0,0,0,0.5);
+            }
+            50% {
+                background-color: rgba(220, 53, 69, 0.2);
+            }
+            100% {
+                background-color: rgba(0,0,0,0.5);
+            }
+        }
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff4d5a, #dc3545);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .content-section {
+            padding: 100px 0;
+            background: #0f0f0f;
+        }
+
+        .fitness-card {
+            background: #1a1a1a;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .fitness-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(220, 53, 69, 0.2);
+        }
+
+        .card-image {
+            position: relative;
+            padding-bottom: 56.25%;
+            overflow: hidden;
+        }
+
+        .card-image iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .card-content {
+            padding: 30px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 8px 16px;
+            background: linear-gradient(45deg, #dc3545, #ff4d5a);
+            border-radius: 50px;
+            color: white;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .card-text {
+            color: #aaa;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .meta-info {
+            display: flex;
+            gap: 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .meta-info i {
+            color: #dc3545;
+            margin-right: 5px;
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-30px);
+            }
+            60% {
+                transform: translateY(-15px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 data-aos="fade-up">Fitness Journey</h1>
+            
+        <p class="lead" data-aos="fade-up" data-aos-delay="200">Transform Your Life Through Fitness</p>
+        <p  data-aos="fade-up" data-aos-delay="200" class="f-p">By:Muvi Fitness</p>
+        </div>
+        <div class="scroll-down">
+            <i class="fas fa-chevron-down fa-2x" style="color: #dc3545;"></i>
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6" data-aos="fade-up">
+                    <div class="fitness-card">
+                        <div class="card-image">
+                            <iframe src="https://www.youtube.com/embed/LiyDfoUkbdo" allowfullscreen></iframe>
+                        </div>
+                        <div class="card-content">
+                            <span class="tag">Build Muscile</span>
+                            <h2 class="card-title">Master Your Strength</h2>
+                            <p class="card-text">Transform your body with our comprehensive strength training program. Learn proper techniques, progressive overload, and nutrition basics.</p>
+                            <div class="meta-info">
+                                <span><i class="fas fa-eye"></i> 1.2k views</span>
+                                <span><i class="fas fa-calendar"></i> Updated weekly</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="fitness-card">
+                        <div class="card-image">
+                            <iframe src="https://www.youtube.com/embed/MgFKZk69zjA" allowfullscreen></iframe>
+                        </div>
+                        <div class="card-content">
+                            <span class="tag"></span>
+                            <h2 class="card-title">Fitness Journey</h2>
+                            <p class="card-text">Join our supportive community and experience the joy of achieving your fitness goals. Expert guidance and motivation await.</p>
+                            <div class="meta-info">
+                                <span><i class="fas fa-users"></i> 500+ members</span>
+                                <span><i class="fas fa-star"></i> 4.9 rating</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    </script>
+</body>
+</html>

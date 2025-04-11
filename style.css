@@ -314,3 +314,42 @@ html {
 .animated-submit-btn:active {
     transform: translateY(1px);
 }
+
+.blog-post {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.blog-post h2 {
+    color: #dc3545;
+    margin-bottom: 20px;
+}
+
+.blog-post .btn {
+    background-color: #dc3545;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.blog-post .btn:hover {
+    background-color: #bb2d3b;
+    transform: scale(1.05);
+}
+
+.blog-post h3 {
+    color: #ffffff;
+    margin: 15px 0;
+}
+
+.blog-post ul {
+    color: #ffffff;
+    margin-left: 20px;
+}
+
+.blog-post p {
+    color: #ffffff;
+    line-height: 1.6;
+}
