@@ -73,6 +73,14 @@
             color: #dc3545;
         }
     </style>
+    <!-- Add this in the head section -->
+    <script>
+        window.addEventListener('error', function(e) {
+            if (e.target.tagName === 'SCRIPT' || e.target.tagName === 'LINK') {
+                console.warn('Resource failed to load:', e.target.src || e.target.href);
+            }
+        }, true);
+    </script>
 </head>
 <body>
     <div class="dashboard-container">
@@ -146,28 +154,50 @@
         </div>
 
     </div>
-    </div>
+    <!-- Remove the extra closing div here -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        window.onload = function() {
-            if (localStorage.getItem('currentUser') !== 'admin') {
-                window.location.href = 'login.html';
-            }
-            updateDashboard();
-            setInterval(updateDashboard, 30000); // Update every 30 seconds
+        // Add this at the beginning of your script section
+        const isProduction = window.location.hostname !== 'localhost';
+        const baseUrl = isProduction ? '/Vignesh' : '';
+
+        // Modify the logout function
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('currentUser');
+            window.location.href = `${baseUrl}/login.html`;
         }
 
+        // Modify the window.onload function
+        window.onload = function() {
+            if (localStorage.getItem('currentUser') !== 'admin') {
+                window.location.href = `${baseUrl}/login.html`;
+            }
+            updateDashboard();
+            setInterval(updateDashboard, 30000);
+        }
+
+        // Add this helper function
+        function safeGetItem(key) {
+            try {
+                return JSON.parse(localStorage.getItem(key) || '[]');
+            } catch (error) {
+                console.error(`Error reading ${key} from localStorage:`, error);
+                return [];
+            }
+        }
+
+        // Modify the displayAdmissions function
         function displayAdmissions() {
             const admissionsList = document.getElementById('admissionsList');
-            const admissions = JSON.parse(localStorage.getItem('admissions') || '[]');
+            const admissions = safeGetItem('admissions');
             
-            // Add training mode statistics at the top
             const modeStats = {
                 online: admissions.filter(a => a.mode === 'online').length,
                 offline: admissions.filter(a => a.mode === 'offline').length
             };
-
+        
             let html = `
                 <div class="row mb-4">
                     <div class="col-md-6">
@@ -184,7 +214,7 @@
                     </div>
                 </div>
             `;
-
+        
             admissions.reverse().forEach(admission => {
                 const packageStatus = getPackageStatusStyle(admission.package);
                 const modeIcon = admission.mode === 'online' ? 'fas fa-laptop' : 'fas fa-dumbbell';
@@ -226,48 +256,15 @@
                     </div>
                 `;
             });
-
+        
             admissionsList.innerHTML = html || '<p class="text-center">No admission applications</p>';
         }
 
-        // Add this helper function
-        function getPackageStatusStyle(package) {
-            switch(package.toLowerCase()) {
-                case 'premium':
-                    return { class: 'bg-warning text-dark' };
-                case 'platinum':
-                    return { class: 'bg-info' };
-                case 'gold':
-                    return { class: 'bg-warning' };
-                default:
-                    return { class: 'bg-secondary' };
-            }
-        }
-
-        // Add this function to handle admission status updates
-        function updateAdmissionStatus(email, status) {
-            const admissions = JSON.parse(localStorage.getItem('admissions') || '[]');
-            const index = admissions.findIndex(a => a.email === email);
-            
-            if (index !== -1) {
-                admissions[index].status = status;
-                admissions[index].updateTime = new Date().toISOString();
-                localStorage.setItem('admissions', JSON.stringify(admissions));
-                displayAdmissions();
-            }
-        }
-
-        function updateDashboard() {
-            displayUserDetails();
-            displayLoginHistory();
-            displayAdmissions();
-            updateStatistics();
-        }
-
+        // Modify other localStorage functions similarly
         function updateStatistics() {
             try {
-                const userDetails = JSON.parse(localStorage.getItem('userDetails') || '{}');
-                const loginHistory = JSON.parse(localStorage.getItem('loginHistory') || '[]');
+                const userDetails = safeGetItem('userDetails');
+                const loginHistory = safeGetItem('loginHistory');
                 
                 // Total Users (excluding admin)
                 const totalUsers = Object.keys(userDetails).length;
@@ -359,20 +356,38 @@
             }
         }
 
-        function searchUsers() {
-            const searchTerm = document.getElementById('userSearch').value.toLowerCase();
-            const userCards = document.querySelectorAll('.user-card');
-            
-            userCards.forEach(card => {
-                const content = card.textContent.toLowerCase();
-                card.style.display = content.includes(searchTerm) ? '' : 'none';
-            });
+        function updateDashboard() {
+            displayUserDetails();
+            displayLoginHistory();
+            displayAdmissions();
+            updateStatistics();
         }
 
-        function logout() {
-            localStorage.removeItem('isLoggedIn');
-            localStorage.removeItem('currentUser');
-            window.location.href = 'login.html';
+        function searchUsers() {
+            try {
+                const searchTerm = document.getElementById('userSearch').value.toLowerCase();
+                const userCards = document.querySelectorAll('.user-card');
+                
+                userCards.forEach(card => {
+                    const content = card.textContent.toLowerCase();
+                    card.style.display = content.includes(searchTerm) ? '' : 'none';
+                });
+            } catch (error) {
+                console.error('Error in search:', error);
+            }
+        }
+
+        function getPackageStatusStyle(package) {
+            switch(package?.toLowerCase()) {
+                case 'premium':
+                    return { class: 'bg-warning text-dark' };
+                case 'platinum':
+                    return { class: 'bg-info' };
+                case 'gold':
+                    return { class: 'bg-warning' };
+                default:
+                    return { class: 'bg-secondary' };
+            }
         }
     </script>
 </body>
