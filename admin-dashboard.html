@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Muvi Fitness</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(45deg, #1a1a1a, #2c3e50);
+            color: white;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .dashboard-container {
+            padding: 2rem;
+            margin-top: 80px;
+        }
+        .user-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .user-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        .navbar {
+            background: linear-gradient(90deg, rgba(0,0,0,0.95), rgba(44,62,80,0.95)) !important;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand {
+            padding: 0;
+            margin-right: 2rem;
+        }
+
+        .logo-image {
+            max-width: 90px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-image:hover {
+            transform: scale(1.08);
+        }
+
+        .nav-link {
+            color: #ffffff !important;
+            font-weight: 500;
+            padding: 8px 20px !important;
+            margin: 0 5px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #ffffff !important;
+            background: rgba(255, 71, 87, 0.8);
+            transform: translateY(-2px);
+        }
+
+        .navbar-nav {
+            align-items: center;
+        }
+
+        @media (max-width: 991px) {
+            .navbar {
+                padding: 10px 0;
+            }
+            .nav-link {
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        if (!localStorage.getItem('isLoggedIn') || localStorage.getItem('currentUser') !== 'admin') {
+            window.location.href = 'login.html';
+        }
+    </script>
+
+    <!-- Update the navbar structure -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="Logo/muvi.lofo-removebg-preview.png" class="logo-image" alt="Muvi Fitness">
+            </a>
+            <div class="navbar-nav ml-auto">
+                <a class="nav-link" href="index.html">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a class="nav-link" href="#" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Add Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <div class="dashboard-container">
+        <div class="dashboard-header animate-fade-in">
+            <h2 class="mb-4">Admin Dashboard</h2>
+            <div class="row">
+                <div class=" col-12 col-md-4">
+                    <div class="user-stats">
+                        <h4>Total Users</h4>
+                        <div class="stat-number mb-3" id="totalUsers">0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="userList"></div>
+    </div>
+
+    <!-- Place this before closing body tag -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script>
+            // Initialize AOS after DOM is loaded
+            document.addEventListener('DOMContentLoaded', function() {
+                AOS.init();
+            });
+
+            function displayUsers() {
+                try {
+                    const userDetails = JSON.parse(localStorage.getItem('userDetails') || '{}');
+                    const userList = document.getElementById('userList');
+                    const totalUsersElement = document.getElementById('totalUsers');
+                    
+                    const userCount = Object.keys(userDetails).length;
+                    totalUsersElement.textContent = userCount;
+
+                    if (userCount === 0) {
+                        userList.innerHTML = '<div class="alert alert-info animate-fade-in">No registered users found.</div>';
+                        return;
+                    }
+
+                    const usersHTML = Object.entries(userDetails).map(([username, details], index) => `
+                        <div class="user-card animate-fade-in" style="animation-delay: ${index * 0.1}s" data-aos="fade-up">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="user-avatar">
+                                    <i class="fas fa-user-circle fa-3x text-warning"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <h3 class="text-warning mb-1">${details.fullName || 'N/A'}</h3>
+                                    <small class="text-muted">Member since: ${details.registrationDate || 'N/A'}</small>
+                                </div>
+                            </div>
+                            <div class="user-details">
+                                <p><i class="fas fa-user mr-2"></i><strong>Username:</strong> ${username}</p>
+                                <p><i class="fas fa-envelope mr-2"></i><strong>Email:</strong> ${details.email || 'N/A'}</p>
+                                <p><i class="fas fa-phone mr-2"></i><strong>Phone:</strong> ${details.phone || 'N/A'}</p>
+                            </div>
+                        </div>
+                    `).join('');
+
+                    userList.innerHTML = usersHTML;
+                } catch (error) {
+                    console.error('Error displaying users:', error);
+                    userList.innerHTML = '<div class="alert alert-danger">Error loading user data</div>';
+                }
+            }
+
+            // Call displayUsers when page loads
+            window.addEventListener('load', displayUsers);
+
+            function logout() {
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('currentUser');
+                window.location.href = 'login.html';
+            }
+        </script>
+    </body>
+</html>

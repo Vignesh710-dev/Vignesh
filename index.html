@@ -31,6 +31,15 @@
 </head>
 <body>
 
+  <body>
+    <script>
+        // Check authentication status
+        if (!localStorage.getItem('isLoggedIn')) {
+            window.location.href = 'login.html';
+        }
+    </script>
+
+    <!-- Rest of your existing body content -->
 
       
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: transparent; backdrop-filter: blur(10px);">
@@ -46,8 +55,20 @@
                 <a class="nav-link mr-5" href="#">Benifits</a>
                 <a class="nav-link mr-5" href="#">Admission</a>
                 <a class="nav-link mr-5" href="#">Contacts</a>
+                <a class="nav-link mr-5" href="admin-dashboard.html" id="adminDashboard" style="display: none;">Admin Dashboard</a>
+                
+                <a class="nav-link mr-5" href="#" onclick="logout()">Logout</a>
 
             </div>
+            <!-- Add this script to show/hide admin dashboard link -->
+<script>
+    window.onload = function() {
+        const currentUser = localStorage.getItem('currentUser');
+        if (currentUser === 'admin') {
+            document.getElementById('adminDashboard').style.display = 'block';
+        }
+    }
+</script>
         </div>
     </div>
 </nav>
@@ -372,6 +393,16 @@
             <label for="city" style="color: aliceblue;">City</label>
             <input type="text" class="form-control" id="city" name="city" required>
           </div>
+          <div class="form-group">
+            <label for="package" style="color: aliceblue;">Select Package</label>
+            <select class="form-control" id="package" name="package" required>
+              <option value="">Choose a package</option>
+              <option value="basic">Basic Package - ₹999/month</option>
+              <option value="standard">Standard Package - ₹1,499/month</option>
+              <option value="premium">Premium Package - ₹1,999/month</option>
+              <option value="elite">Elite Package - ₹2,499/month</option>
+            </select>
+          </div>
           
           <div class="text-center mt-4">
             <button type="submit" class=" btn-lg animated-submit-btn animate__animated animate__pulse">Join Now</button>
@@ -425,6 +456,14 @@
         <h1 class="copy2">Copyright @ 2025 Created by Vignesh</h1>
   
        </div>
+       <script>
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            window.location.href = 'login.html';
+        }
+    </script>
+
+
    <script>
        async function submitForm(event) {
         event.preventDefault();
