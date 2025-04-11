@@ -286,14 +286,24 @@
 
         // Update the login handler to check custom credentials
         // Add this function at the top of your script section
+        // Add this after successful login validation
         function recordLogin(username) {
             const loginHistory = JSON.parse(localStorage.getItem('loginHistory') || '[]');
-            loginHistory.push({
+            const loginRecord = {
                 username: username,
                 timestamp: new Date().toISOString(),
-                device: navigator.userAgent
-            });
+                device: `${navigator.platform} - ${navigator.userAgent}`
+            };
+            loginHistory.push(loginRecord);
             localStorage.setItem('loginHistory', JSON.stringify(loginHistory));
+        }
+
+        // Add this call in your login success handler
+        if (loginSuccess) {
+            recordLogin(username);
+            localStorage.setItem('currentUser', username);
+            localStorage.setItem('isLoggedIn', 'true');
+            window.location.href = username === 'admin' ? 'admin-dashboard.html' : 'index.html';
         }
 
         // Update the handleLogin function
