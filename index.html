@@ -466,71 +466,77 @@
 
    <script>
        async function submitForm(event) {
-        event.preventDefault();
-        
-        try {
-            const formData = new FormData(event.target);
-            const data = Object.fromEntries(formData);
+    event.preventDefault();
     
-            // Show loading state
-            Swal.fire({
-                title: 'Submitting...',
-                text: 'Please wait',
-                allowOutsideClick: false,
-                showConfirmButton: false,
-                willOpen: () => {
-                    Swal.showLoading();
-                }
-            });
-    
-            // Using Formspree
-            const response = await fetch('https://formspree.io/f/mgvarrvr', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-    
-            if (response.ok) {
-                Swal.fire({
-                    title: 'Success! 🎉',
-                    text: 'Form submitted successfully. We will contact you shortly.',
-                    icon: 'success',
-                    iconColor: '#28a745',
-                    showConfirmButton: true,
-                    confirmButtonText: '✨ Great!',
-                    confirmButtonColor: '#28a745',
-                    timer: 3000,
-                    timerProgressBar: true,
-                    showClass: {
-                        popup: 'animate__animated animate__fadeInDown'
-                    },
-                    hideClass: {
-                        popup: 'animate__animated animate__fadeOutUp'
-                    }
-                });
-                
-                event.target.reset();
-            } else {
-                throw new Error('Form submission failed');
+    try {
+        const formData = new FormData(event.target);
+        const data = Object.fromEntries(formData);
+
+        // Show loading state
+        Swal.fire({
+            title: 'Submitting...',
+            text: 'Please wait',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            willOpen: () => {
+                Swal.showLoading();
             }
-            
-        } catch (error) {
-            console.error('Error:', error);
+        });
+
+        // Using Formspree
+        const response = await fetch('https://formspree.io/f/mgvarrvr', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+            // Save admission data to localStorage
+            const admissions = JSON.parse(localStorage.getItem('admissions') || '[]');
+            data.timestamp = new Date().toISOString(); // Add timestamp
+            admissions.push(data);
+            localStorage.setItem('admissions', JSON.stringify(admissions));
+
             Swal.fire({
-                title: 'Oops! 😕',
-                text: 'There was an issue submitting the form. Please try again.',
-                icon: 'error',
-                iconColor: '#dc3545',
-                confirmButtonText: '🔄 Try Again',
-                confirmButtonColor: '#dc3545',
+                title: 'Success! 🎉',
+                text: 'Form submitted successfully. We will contact you shortly.',
+                icon: 'success',
+                iconColor: '#28a745',
+                showConfirmButton: true,
+                confirmButtonText: '✨ Great!',
+                confirmButtonColor: '#28a745',
+                timer: 3000,
+                timerProgressBar: true,
                 showClass: {
-                    popup: 'animate__animated animate__shakeX'
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
                 }
             });
+            
+            event.target.reset();
+        } else {
+            throw new Error('Form submission failed');
         }
+        
+    } catch (error) {
+        console.error('Error:', error);
+        Swal.fire({
+            title: 'Oops! 😕',
+            text: 'There was an issue submitting the form. Please try again.',
+            icon: 'error',
+            iconColor: '#dc3545',
+            confirmButtonText: '🔄 Try Again',
+            confirmButtonColor: '#dc3545',
+            showClass: {
+                popup: 'animate__animated animate__shakeX'
+            }
+        });
     }
+}
     </script>
 
        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
