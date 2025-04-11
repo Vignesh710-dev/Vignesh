@@ -353,3 +353,22 @@ html {
     color: #ffffff;
     line-height: 1.6;
 }
+
+
+<!-- -->
+.form-control {
+    max-width: 100%;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  @media (max-width: 576px) {
+    select.form-control {
+      font-size: 14px;
+      padding-right: 25px;
+    }
+    .box2 {
+      padding: 10px;
+    }
+  }
