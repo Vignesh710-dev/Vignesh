@@ -10,21 +10,9 @@
     <link rel="stylesheet" href="style.css"/>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <style>
-      .swal2-popup {
-          animation-duration: 0.5s !important;
-      }
-      .swal2-show {
-          animation: swal2-show 0.5s !important;
-      }
-  </style>
     <title>Muvi Fitnees</title>
     <link rel="logo" type="logo/bng" href="Logo/muvi.lofo.jpg">
     <style>
-
-.animated-popup {
-            animation-duration: 0.5s !important;
-        }
       @media (max-width: 768px) {
           [data-aos] {
               transition-duration: 600ms !important;
@@ -583,14 +571,7 @@
                 },
                 hideClass: {
                     popup: 'animate__animated animate__fadeOutUp'
-                },
-                customClass: {
-        popup: 'swal2-popup'
-    },
-    didOpen: () => {
-        const popup = Swal.getPopup();
-        popup.style.animationDuration = '0.5s';
-    }
+                }
             });
             
             event.target.reset();
@@ -658,76 +639,9 @@ function validateAndSubmitForm(event) {
     submitForm(event);
 }
 
-async function submitForm(event) {
-    try {
-        const formData = new FormData(event.target);
-        const data = Object.fromEntries(formData);
-
-        Swal.fire({
-            title: 'Submitting...',
-            text: 'Please wait',
-            allowOutsideClick: false,
-            showConfirmButton: false,
-            willOpen: () => {
-                Swal.showLoading();
-            }
-        });
-
-        const response = await fetch('https://formspree.io/f/mgvarrvr', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-
-        if (response.ok) {
-            const admissions = JSON.parse(localStorage.getItem('admissions') || '[]');
-            data.timestamp = new Date().toISOString();
-            admissions.push(data);
-            localStorage.setItem('admissions', JSON.stringify(admissions));
-
-            Swal.fire({
-                title: 'Success! 🎉',
-                text: 'Form submitted successfully. We will contact you shortly.',
-                icon: 'success',
-                iconColor: '#28a745',
-                showConfirmButton: true,
-                confirmButtonText: '✨ Great!',
-                confirmButtonColor: '#28a745',
-                timer: 3000,
-                timerProgressBar: true,
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                }
-            });
-            
-            event.target.reset();
-        } else {
-            throw new Error('Form submission failed');
-        }
-        
-    } catch (error) {
-        console.error('Error:', error);
-        Swal.fire({
-            title: 'Oops! 😕',
-            text: 'There was an issue submitting the form. Please try again.',
-            icon: 'error',
-            iconColor: '#dc3545',
-            confirmButtonText: '🔄 Try Again',
-            confirmButtonColor: '#dc3545',
-            showClass: {
-                popup: 'animate__animated animate__shakeX'
-            }
-        });
-    }
-}
 </script>
 
-      
+       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   
 
 
@@ -743,7 +657,6 @@ async function submitForm(event) {
             anchorPlacement: 'top-bottom'
           });
         </script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>  
     <script>
     AOS.init();
@@ -752,4 +665,4 @@ async function submitForm(event) {
     
          
     </body>
-    </head>
+    </head>c:\Users\vigne\OneDrive\Desktop\Githup Files\Vignesh\c:\Users\vigne\OneDrive\Desktop\Githup Files\Vignesh\
