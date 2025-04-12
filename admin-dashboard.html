@@ -149,7 +149,58 @@
 
             <!-- Admissions Tab -->
             <div class="tab-pane fade" id="admissions" role="tabpanel">
-                <div id="admissionsList"></div>
+                <div class="admissions-container">
+                    <h2>Admission Applications</h2>
+                    <div id="admissionsList"></div>
+                </div>
+
+                <script>
+                function displayAdmissions() {
+                    const admissionsList = document.getElementById('admissionsList');
+                    const admissions = JSON.parse(localStorage.getItem('admissions') || '[]');
+                    
+                    if (admissions.length === 0) {
+                        admissionsList.innerHTML = '<p>No admissions yet</p>';
+                        return;
+                    }
+
+                    const admissionsHTML = admissions.map(admission => `
+                        <div class="admission-card">
+                            <h3>${admission.name}</h3>
+                            <p>Email: ${admission.email}</p>
+                            <p>Phone: ${admission.phone}</p>
+                            <p>City: ${admission.city}</p>
+                            <p>Package: ${admission.package}</p>
+                            <p>Mode: ${admission.mode}</p>
+                            <p>Status: ${admission.status}</p>
+                            <p>Date: ${new Date(admission.timestamp).toLocaleString()}</p>
+                        </div>
+                    `).join('');
+
+                    admissionsList.innerHTML = admissionsHTML;
+                }
+
+                // Call this when the page loads
+                window.onload = function() {
+                    displayAdmissions();
+                }
+                </script>
+
+                <style>
+                .admission-card {
+                    border: 1px solid #ddd;
+                    padding: 15px;
+                    margin: 10px 0;
+                    border-radius: 5px;
+                    background-color: #f9f9f9;
+                }
+
+                .admissions-container {
+                    padding: 20px;
+                    max-width: 800px;
+                    margin: 0 auto;
+                }
+                </style>
             </div>
         </div>
 

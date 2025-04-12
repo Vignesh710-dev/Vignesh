@@ -508,12 +508,17 @@
 
 
    <script>
-       async function submitForm(event) {
+ async function submitForm(event) {
     event.preventDefault();
     
     try {
         const formData = new FormData(event.target);
         const data = Object.fromEntries(formData);
+
+        // Add additional details
+        data.timestamp = new Date().toISOString();
+        data.status = 'pending';
+        data.id = Date.now().toString();
 
         // Show loading state
         Swal.fire({
@@ -536,10 +541,19 @@
         });
 
         if (response.ok) {
-            // Save admission data to localStorage
+            // Save admission data to localStorage with proper structure
             const admissions = JSON.parse(localStorage.getItem('admissions') || '[]');
-            data.timestamp = new Date().toISOString(); // Add timestamp
-            admissions.push(data);
+            admissions.push({
+                id: data.id,
+                name: data.name,
+                email: data.email,
+                phone: data.phone,
+                city: data.city,
+                package: data.package,
+                mode: data.mode,
+                timestamp: data.timestamp,
+                status: data.status
+            });
             localStorage.setItem('admissions', JSON.stringify(admissions));
 
             Swal.fire({
