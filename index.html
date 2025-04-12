@@ -13,6 +13,10 @@
     <title>Muvi Fitnees</title>
     <link rel="logo" type="logo/bng" href="Logo/muvi.lofo.jpg">
     <style>
+
+.animated-popup {
+            animation-duration: 0.5s !important;
+        }
       @media (max-width: 768px) {
           [data-aos] {
               transition-duration: 600ms !important;
@@ -571,7 +575,14 @@
                 },
                 hideClass: {
                     popup: 'animate__animated animate__fadeOutUp'
-                }
+                },
+                customClass: {
+        popup: 'animated-popup'
+    },
+    didOpen: () => {
+        const popup = Swal.getPopup();
+        popup.style.animationDuration = '0.5s';
+    }
             });
             
             event.target.reset();
