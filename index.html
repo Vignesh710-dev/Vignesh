@@ -27,6 +27,49 @@
           }
       }
   </style>
+
+<style>
+  .navbar-nav .nav-link {
+      position: relative;
+      transition: all 0.3s ease;
+  }
+
+  .navbar-nav .nav-link:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      background: #ff0000;
+      left: 0;
+      bottom: -5px;
+      transition: width 0.3s ease;
+  }
+
+  .navbar-nav .nav-link:hover:after {
+      width: 100%;
+  }
+
+  .navbar-nav .nav-link.active:after {
+      width: 100%;
+  }
+
+  .dropdown-menu {
+      background-color: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .dropdown-item {
+      color: white;
+      transition: all 0.3s ease;
+  }
+
+  .dropdown-item:hover {
+      background-color: rgba(255, 0, 0, 0.2);
+      color: #ff0000;
+      transform: translateX(10px);
+  }
+</style>
     
 </head>
 <body>
@@ -51,10 +94,30 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ml-auto">
                 <a class="nav-link active mr-5" href="#sectionhome">Home <span class="sr-only">(current)</span></a>
-                <a class="nav-link mr-5"  href="#sectionfeatures">Features </a>
-                <a class="nav-link mr-5" href="#">Benifits</a>
-                <a class="nav-link mr-5" href="#">Admission</a>
-                <a class="nav-link mr-5" href="#">Contacts</a>
+                <div class="nav-item dropdown">
+                  <a class="nav-link mr-5 " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Features
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="#sectionfeatures">All Features</a>
+                      <a class="dropdown-item" href="#healthCare">Health Care</a>
+                      <a class="dropdown-item" href="#gymStrategies">Gym Strategies</a>
+                      <a class="dropdown-item" href="#equipment">Quality Equipment</a>
+                  </div>
+              </div>
+              <div class="nav-item dropdown">
+                <a class="nav-link mr-5" href="#" id="benefitsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Benefits
+                </a>
+                <div class="dropdown-menu" aria-labelledby="benefitsDropdown">
+                    <a class="dropdown-item" href="#benifitsSection">All Benefits</a>
+                    <a class="dropdown-item" href="#confidence">Boost Confidence</a>
+                    <a class="dropdown-item" href="#muscle">Muscle Density</a>
+                    <a class="dropdown-item" href="#memory">Improved Memory</a>
+                </div>
+            </div>
+                <a class="nav-link mr-5" href="#admissionSection">Admission</a>
+                <a class="nav-link mr-5" href="contact.html">Contacts</a>
                 <a class="nav-link mr-5" href="admin-dashboard.html" id="adminDashboard" style="display: none;">Admin Dashboard</a>
                 
                 <a class="nav-link mr-5" href="#" onclick="logout()">Logout</a>
@@ -220,7 +283,7 @@
         </div>
       </div>
                  
-      <div class="container2 pt-5 pb-5">
+      <div class="container2 pt-5 pb-5" id="benifitsSection">
         <div class="text-center">
         <p class="f-p">Benifits</p>
         <h1 class="threed-heading mb-4">Benifits Of Joining Our Gym</h1>
@@ -399,7 +462,7 @@
         </div>
       </div>
 <!--------------------------------------------------------------------------->
-<div class="container2 pt-4 pb-5">
+<div class="container2 pt-4 pb-5" id="admissionSection">
   <p class="f-p text-center">If you would like to join us,pleas apply here</p>
   <h1 class="threed-heading mb-4 text-center">Admission</h1>
   <div class="container" data-aos="zoom-in" data-aos-duration="800">

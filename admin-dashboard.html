@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Muvi Fitness - Admin Dashboard</title>
@@ -440,6 +441,51 @@
                     return { class: 'bg-secondary' };
             }
         }
+        // Function to update admission status
+function updateAdmissionStatus(email, newStatus) {
+    try {
+        const admissions = JSON.parse(localStorage.getItem('admissions') || '[]');
+        const index = admissions.findIndex(admission => admission.email === email);
+        
+        if (index !== -1) {
+            admissions[index].status = newStatus;
+            localStorage.setItem('admissions', JSON.stringify(admissions));
+            
+            // Show success message
+            Swal.fire({
+                title: 'Status Updated!',
+                text: `Application has been ${newStatus}`,
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500,
+                background: '#2d2d2d',
+                color: '#fff'
+            }).then(() => {
+                // Refresh the admissions display
+                displayAdmissions();
+            });
+
+            // Send email notification (you can implement this later)
+            const admission = admissions[index];
+            const message = newStatus === 'approved' 
+                ? `Congratulations! Your gym admission application has been approved.`
+                : `We regret to inform you that your gym admission application has been rejected.`;
+            
+            // For now, just log the notification
+            console.log(`Email would be sent to ${admission.email}: ${message}`);
+            
+        }
+    } catch (error) {
+        console.error('Error updating status:', error);
+        Swal.fire({
+            title: 'Error!',
+            text: 'Failed to update application status',
+            icon: 'error',
+            background: '#2d2d2d',
+            color: '#fff'
+        });
+    }
+}
     </script>
 </body>
 </html>
