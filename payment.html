@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Options - Muvi Fitness</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a1a, #000000);
+            min-height: 100vh;
+        }
+
+        .payment-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 0, 0, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(255, 0, 0, 0.37);
+        }
+
+        .payment-btn {
+            background: #ff0000;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            width: 80%;
+            margin-top: 20px;
+        }
+
+        .payment-btn:hover {
+            background: #cc0000;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+        }
+
+        .threed-heading {
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(255, 0, 0, 0.5);
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .feature-list li {
+            padding: 12px 15px;
+            margin: 8px 0;
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+            text-align: left;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            color: #ff0000;
+            margin-right: 10px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .feature-list li:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+    </style>
+</head>
+<style>
+    .return-home {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 12px 25px;
+        border-radius: 30px;
+        color: white;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .return-home:hover {
+        background: rgba(255, 0, 0, 0.2);
+        border-color: rgba(255, 0, 0, 0.5);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 0, 0, 0.2);
+        color: white;
+        text-decoration: none;
+    }
+
+    .return-home svg {
+        width: 16px;
+        height: 16px;
+        fill: currentColor;
+    }
+</style>
+
+<body>
+    <!-- Add this right after the body tag -->
+    <a href="index.html" class="return-home">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M12 2L2 12h3v8h6v-6h2v6h6v-8h3L12 2z"/>
+        </svg>
+        Home
+    </a>
+
+    <!-- Include your navigation bar here -->
+    <div class="container mt-5 pt-5">
+        <h1 class="text-center mb-5 threed-heading">Choose Your Membership Plan</h1>
+        
+        <div class="row">
+            <!-- Basic Plan -->
+            <div class="col-md-6 col-lg-3">
+                <div class="payment-card text-center">
+                    <h3 class="text-white">Basic Plan</h3>
+                    <div class="price">₹999</div>
+                    <p class="text-muted">per month</p>
+                    <ul class="feature-list">
+                        <li class="text-white">Access to Gym Equipment</li>
+                        <li class="text-white">Basic Workout Plan</li>
+                        <li class="text-white">Locker Access</li>
+                        <li class="text-white">Water Dispenser</li>
+                    </ul>
+                    <button class="payment-btn p-0" onclick="initiatePayment('basic', 999)">Select Plan</button>
+                </div>
+            </div>
+
+            <!-- Standard Plan -->
+            <div class="col-md-6 col-lg-3">
+                <div class="payment-card text-center">
+                    <h3 class="text-white">Standard Plan</h3>
+                    <div class="price">₹1,499</div>
+                    <p class="text-muted">per month</p>
+                    <ul class="feature-list">
+                        <li class="text-white">All Basic Features</li>
+                        <li class="text-white">Personal Trainer (2 sessions)</li>
+                        <li class="text-white">Nutrition Guide</li>
+                        <li class="text-white">Fitness Assessment</li>
+                    </ul>
+                    <button class="payment-btn p-0" onclick="initiatePayment('standard', 1499)">Select Plan</button>
+                </div>
+            </div>
+
+            <!-- Premium Plan -->
+            <div class="col-md-6 col-lg-3">
+                <div class="payment-card text-center">
+                    <h3 class="text-white">Premium Plan</h3>
+                    <div class="price">₹1,999</div>
+                    <p class="text-muted">per month</p>
+                    <ul class="feature-list">
+                        <li class="text-white">All Standard Features</li>
+                        <li class="text-white">Personal Trainer (4 sessions)</li>
+                        <li class="text-white">Access to Classes</li>
+                        <li class="text-white">Protein Shake/Day</li>
+                    </ul>
+                    <button class="payment-btn p-0" onclick="initiatePayment('premium', 1999)">Select Plan</button>
+                </div>
+            </div>
+
+            <!-- Elite Plan -->
+            <div class="col-md-6 col-lg-3">
+                <div class="payment-card text-center">
+                    <h3 class="text-white">Elite Plan</h3>
+                    <div class="price">₹2,499</div>
+                    <p class="text-muted">per month</p>
+                    <ul class="feature-list">
+                        <li class="text-white">All Premium Features</li>
+                        <li class="text-white">Unlimited PT Sessions</li>
+                        <li class="text-white">Diet Plan </li>
+                        <li class="text-white">24/7 Support</li>
+                    </ul>
+                    <button class="payment-btn p-0" onclick="initiatePayment('elite', 2499)">Select Plan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <!-- Add SweetAlert2 for better notifications -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Update the payment script -->
+    <script>
+        function initiatePayment(plan, amount) {
+            var options = {
+                "key": "rzp_test_1DP5mmOlF5G5ag", // This is a test key, safe to use for testing
+                "amount": amount * 100,
+                "currency": "INR",
+                "name": "Muvi Fitness",
+                "description": plan.charAt(0).toUpperCase() + plan.slice(1) + " Plan Membership",
+                "image": "Logo/muvi.lofo.jpg",
+                "prefill": {
+                    "name": "Test User",
+                    "email": "test@example.com",
+                    "contact": "9999999999"
+                },
+                "theme": {
+                    "color": "#ff0000"
+                },
+                "handler": function (response) {
+                    handlePaymentSuccess(response, plan, amount);
+                }
+            };
+            var rzp = new Razorpay(options);
+            rzp.on('payment.failed', handlePaymentFailure);
+            rzp.open();
+        }
+
+        function handlePaymentSuccess(response, plan, amount) {
+            Swal.fire({
+                title: 'Payment Successful!',
+                text: 'Your ' + plan + ' membership has been activated',
+                icon: 'success',
+                confirmButtonColor: '#ff0000'
+            }).then(() => {
+                // Store payment info in localStorage
+                const paymentInfo = {
+                    id: response.razorpay_payment_id,
+                    plan: plan,
+                    amount: amount,
+                    date: new Date().toISOString()
+                };
+                const payments = JSON.parse(localStorage.getItem('payments') || '[]');
+                payments.push(paymentInfo);
+                localStorage.setItem('payments', JSON.stringify(payments));
+                
+                window.location.href = 'index.html';
+            });
+        }
+
+        function handlePaymentFailure(response) {
+            Swal.fire({
+                title: 'Payment Failed',
+                text: 'Please try again or contact support',
+                icon: 'error',
+                confirmButtonColor: '#ff0000'
+            });
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -74,6 +74,31 @@
             color: #dc3545;
         }
     </style>
+    <style>
+        /* Add this to your existing styles */
+        .home-btn {
+            background: linear-gradient(45deg, #ff0000, #990000);
+            color: white;
+            padding: 8px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+    
+        .home-btn:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(45deg, #990000, #660000);
+            box-shadow: 0 6px 20px rgba(255, 0, 0, 0.3);
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+    
     <!-- Add this in the head section -->
     <script>
         window.addEventListener('error', function(e) {
@@ -85,6 +110,13 @@
 </head>
 <body>
     <div class="dashboard-container">
+        <div class="dashboard-container">
+            <div class="text-center mb-4">
+                <a href="index.html" class="home-btn animate__animated animate__fadeIn">
+                    <i class="fas fa-home"></i> Return to Home
+                </a>
+            </div>
+            
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="section-title mb-0">Muvi Fitness Admin Dashboard</h1>
             <button class="btn btn-outline-danger" onclick="logout()">
