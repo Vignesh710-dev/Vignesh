@@ -178,6 +178,130 @@
             window.location.href = 'login.html';
         }
     </script>
+    <style>
+      .footer-main {
+          background: linear-gradient(45deg, #1a1a1a, #2d2d2d);
+          color: white;
+      }
+  
+      .footer-widget {
+          padding: 15px;
+      }
+  
+      .widget-title {
+          font-size: 1.5rem;
+          margin-bottom: 1.2rem;
+          position: relative;
+          padding-bottom: 10px;
+      }
+  
+      .widget-title::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          width: 50px;
+          height: 2px;
+          background: #c11b3c;
+      }
+  
+      .contact-info {
+          list-style: none;
+          padding: 0;
+      }
+  
+      .contact-info li {
+          margin-bottom: 15px;
+          display: flex;
+          align-items: center;
+      }
+  
+      .contact-info i {
+          margin-right: 10px;
+          color: #c11b3c;
+      }
+  
+      .contact-info a {
+          color: white;
+          text-decoration: none;
+          transition: color 0.3s;
+      }
+  
+      .contact-info a:hover {
+          color: #c11b3c;
+      }
+  
+      .social-links {
+          display: flex;
+          gap: 15px;
+          margin-top: 20px;
+      }
+  
+      .social-icon {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.1);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          transition: all 0.3s;
+      }
+  
+      .social-icon:hover {
+          background: #c11b3c;
+          transform: translateY(-3px);
+      }
+  
+      .newsletter-form .input-group {
+          display: flex;
+          gap: 10px;
+      }
+  
+      .subscribe-btn {
+          background: #c11b3c;
+          border: none;
+          padding: 8px 20px;
+          white-space: nowrap;
+      }
+  
+      @media (max-width: 768px) {
+          .footer-widget {
+              text-align: center;
+              margin-bottom: 30px;
+          }
+  
+          .widget-title::after {
+              left: 50%;
+              transform: translateX(-50%);
+          }
+  
+          .social-links {
+              justify-content: center;
+          }
+  
+          .contact-info li {
+              justify-content: center;
+          }
+  
+          .newsletter-form .input-group {
+              flex-direction: column;
+          }
+  
+          .subscribe-btn {
+              width: 100%;
+              margin-top: 10px;
+          }
+  
+          .footer-widget:last-child {
+              margin-bottom: 0;
+          }
+      }
+  </style>
+  <div class="d-block d-md-none">
+
+  </div>
 
     <!-- Rest of your existing body content -->
 
@@ -194,19 +318,12 @@
                 <!-- Add this after the Admission nav link -->
 <a class="nav-link mr-3" href="#bmiSection">BMI Calculator</a>
                 <div class="nav-item dropdown">
-                  <a class="nav-link mr-3" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Features
-                  </a>
-                  <!-- Add this after the Admission nav link -->
-
-                  
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="#sectionfeatures">All Features</a>
-                      <a class="dropdown-item" href="#healthCare">Health Care</a>
-                      <a class="dropdown-item" href="#gymStrategies">Gym Strategies</a>
-                      <a class="dropdown-item" href="#equipment">Quality Equipment</a>
+                  <a class="nav-link mr-3" href="#aiAnalyzer" >
+                    AI Analysis
+                  </a>  
                   </div>
-              </div>
+              
+
               <div class="nav-item dropdown">
                 <a class="nav-link mr-3" href="#" id="benefitsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Benefits
@@ -219,14 +336,14 @@
                     <a class="dropdown-item" href="#memory">Improved Memory</a>
                 </div>
             </div>
-                <a class="nav-link mr-3" href="#admissionSection">Admission</a>
+                <a class="nav-link mr-3" href="admission.html">Admission</a>
                 <a class="nav-link mr-3" href="contact.html">Contacts</a>
                 <a class="nav-link mr-3" href="admin-dashboard.html" id="adminDashboard" style="display: none;">Admin Dashboard</a>
                 
                 
             </div>
             
-            <a class="nav-link mr-2 membership-btn animate__animated animate__pulse animate__infinite"" href="payment.html">Membership</a>
+            <a class="nav-link mr-2 membership-btn animate__animated animate__pulse animate__infinite" href="payment.html">Membership</a>
             <a class="nav-link mr-2 logout-btn animate__animated animate__headShake animate__delay-2s animate__repeat-2" href="#" onclick="logout()">Logout</a>
 
        
@@ -234,6 +351,7 @@
         </div>
         
     </nav>
+  
 
             
             <!-- Add this script to show/hide admin dashboard link -->
@@ -251,7 +369,7 @@
       <div class="back_img text-center d-flex flex-column justify-content-center">
         <h1 CLASS="first_heading animate__animated animate__fadeInDown"><span class=" animate__animated animate__backInLeft">Be Storng</span> Traning Hard</h1>
         <div>
-        <button class="p-2 pl-1 pr-1">Get In Touch</button>
+       <a href="admission.html"> <button class="p-2 pl-1 pr-1">Get In Touch</button></a>
       </div>
       </div>
     </div>
@@ -633,63 +751,148 @@
         </div>
     </div>
 
-      
-<div class="container3 pt-4 pb-5" id="admissionSection">
-  <p class="f-p text-center">If you would like to join us,pleas apply here</p>
-  <h1 class="threed-heading mb-4 text-center">Admission</h1>
-  <div class="container" data-aos="zoom-in" data-aos-duration="800">
-    <div class="row justify-content-center">
-      <div class="col-sm-12 col-md-8 col-lg-6">
-        <form id="contactForm" onsubmit="submitForm(event)" class="p-3">
-          <div class="form-group">
-            <label for="name" style="color: aliceblue;">Name</label>
-            <input type="text" class="form-control" id="name" name="name" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="email" style="color: aliceblue;">Email address</label>
-            <input type="email" class="form-control" id="email" name="email" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="phone" style="color: aliceblue;">Phone</label>
-            <input type="tel" class="form-control" id="phone" name="phone" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="city" style="color: aliceblue;">City</label>
-            <input type="text" class="form-control" id="city" name="city" required>
-          </div>
-          <div class="form-group">
-            <label for="package" style="color: aliceblue;">Select Package</label>
-            <select class="form-control" id="package" name="package" required>
-              <option value="">Choose a package</option>
-              <option value="basic">Basic Package - ₹999/month</option>
-              <option value="standard">Standard Package - ₹1,499/month</option>
-              <option value="premium">Premium Package - ₹1,999/month</option>
-              <option value="elite">Elite Package - ₹2,499/month</option>
-            </select>
-          </div>
-            
-          <div class="form-group">
-            <label for="mode" style="color: aliceblue;">Training Mode</label>
-            <select class="form-control" id="mode" name="mode" required>
-              <option value="">Select training mode</option>
-              <option value="offline">Offline (In-Person)</option>
-              <option value="online">Online (Virtual Training)</option>
-            </select>
-          </div>
+    <!-- Add this after your BMI Calculator section -->
 
-          
-          
-          <div class="text-center mt-4">
-            <button type="submit" class=" btn-lg animated-submit-btn animate__animated animate__pulse">Join Now</button>
+  
+
+<!-- Add this script before the closing body tag -->
+<script>
+function getAIRecommendation() {
+  const goal = document.getElementById('fitnessGoal').value;
+  const level = document.getElementById('experienceLevel').value;
+  const recommendationDiv = document.getElementById('aiRecommendation');
+
+  if (!goal || !level) {
+      Swal.fire({
+          title: 'Missing Information',
+          text: 'Please select both your fitness goal and experience level',
+          icon: 'warning',
+          confirmButtonColor: '#ff3c5f'
+      });
+      return;
+  }
+
+  // Show loading state
+  Swal.fire({
+      title: 'Analyzing...',
+      text: 'Our Muvi Fitness AI is creating your plan',
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      willOpen: () => {
+          Swal.showLoading();
+      }
+  });
+
+  // Simulated AI response based on user selections
+  const recommendations = {
+      weightLoss: {
+          beginner: {
+              workout: "3 days/week: 30 min cardio + basic strength training",
+              nutrition: "Focus on protein-rich foods and calorie deficit",
+              tips: "Start with walking and bodyweight exercises"
+          },
+          intermediate: {
+              workout: "4-5 days/week: HIIT + moderate weight training",
+              nutrition: "Macro tracking and meal timing",
+              tips: "Incorporate supersets and circuit training"
+          },
+          advanced: {
+              workout: "5-6 days/week: Complex training splits + cardio",
+              nutrition: "Advanced nutrition cycling",
+              tips: "Focus on progressive overload"
+          }
+      },
+      muscleGain: {
+          beginner: {
+              workout: "3 days/week: Full body workouts",
+              nutrition: "Caloric surplus with high protein",
+              tips: "Master compound movements"
+          },
+          intermediate: {
+              workout: "4 days/week: Upper/Lower split",
+              nutrition: "Strategic meal planning for muscle growth",
+              tips: "Focus on time under tension"
+          },
+          advanced: {
+              workout: "5-6 days/week: PPL or body part split",
+              nutrition: "Advanced bulking strategies",
+              tips: "Incorporate advanced techniques like drop sets"
+          }
+      }
+      // Add more recommendations for other goals
+  };
+
+  setTimeout(() => {
+      Swal.close();
+      
+      const recommendation = recommendations[goal]?.[level] || {
+          workout: "Personalized program based on your goals",
+          nutrition: "Balanced nutrition plan",
+          tips: "Regular assessment and adjustment"
+      };
+
+      recommendationDiv.innerHTML = `
+          <div class="p-4 rounded" style="background: rgba(255,255,255,0.1);">
+              <h4 class="mb-3">Your Personalized Plan</h4>
+              <p><strong>Workout Plan:</strong> ${recommendation.workout}</p>
+              <p><strong>Nutrition Guide:</strong> ${recommendation.nutrition}</p>
+              <p><strong>Pro Tips:</strong> ${recommendation.tips}</p>
+              <div class="mt-3">
+                  <button onclick="window.location.href='payment.html'" class="btn btn-danger btn-sm">
+                      Start Your Journey
+                  </button>
+              </div>
           </div>
-        </form>
+      `;
+      recommendationDiv.style.display = 'block';
+      
+      // Scroll to recommendation
+      recommendationDiv.scrollIntoView({ behavior: 'smooth' });
+  }, 2000);
+}
+</script>
+      
+<div class="container3 pt-4 pb-5" id="aiAnalyzer">
+  <p class="f-p text-center">AI-Powered Fitness Analysis</p>
+  <h1 class="threed-heading mb-4 text-center">Smart Fitness Advisor</h1>
+  <div class="container" data-aos="zoom-in" data-aos-duration="800">
+      <div class="row justify-content-center">
+          <div class="col-12 col-md-8 col-lg-6">
+              <div class="glass-box p-4">
+                  <div class="text-center mb-4">
+                      <i class="fas fa-brain fa-3x" style="color: #ff3c5f;"></i>
+                  </div>
+                  <div class="ai-analysis-form">
+                      <div class="form-group mb-3">
+                          <label for="fitnessGoal" class="text-white mb-2">Your Fitness Goal</label>
+                          <select class="form-control" id="fitnessGoal">
+                              <option value="">Select your goal</option>
+                              <option value="weightLoss">Weight Loss</option>
+                              <option value="muscleGain">Muscle Gain</option>
+                              <option value="endurance">Endurance</option>
+                              <option value="flexibility">Flexibility</option>
+                          </select>
+                      </div>
+                      <div class="form-group mb-3">
+                          <label for="experienceLevel" class="text-white mb-2">Experience Level</label>
+                          <select class="form-control" id="experienceLevel">
+                              <option value="">Select your level</option>
+                              <option value="beginner">Beginner</option>
+                              <option value="intermediate">Intermediate</option>
+                              <option value="advanced">Advanced</option>
+                          </select>
+                      </div>
+                      <button onclick="getAIRecommendation()" class="btn btn-danger btn-lg d-block mx-auto animated-submit-btn animate__animated animate__pulse">
+                          Get AI Recommendation
+                      </button>
+                  </div>
+                  <div id="aiRecommendation" class="mt-4 text-white" style="display: none;"></div>
+              </div>
+          </div>
       </div>
-    </div>
   </div>
-</div>
+
+  </div>
 
       
 <!------------------------------------------------------------------------------------------------------------------------>
@@ -698,7 +901,7 @@
   <div class="container">
       <div class="row g-4">
           <!-- About Section -->
-          <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+          <div class="col-lg-4 col-md-12 mb-4">
               <div class="footer-widget">
                   <h3 class="widget-title">Who We Are</h3>
                   <p class="widget-text">We are a dedicated fitness community focused on strength, health, and motivation, helping individuals reach their goals with expert guidance.</p>
@@ -851,6 +1054,9 @@
           bottom: 80px;
       }
   }
+  h5{
+    font-size:18px;
+  }
 </style>
 
 <!-- Add this before the closing body tag -->
@@ -919,7 +1125,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Contact and Location
         'contact': 'You can reach us at:\nPhone: +91 90807 00642\nEmail: vigneshvcoder@gmail.com\nOr visit our facility in Chennai.',
-        'location': 'We\'re conveniently located in Chennai. Would you like directions to our facility?',
+        'location': 'We\'re conveniently located in sethu semai Rmanathapuram. Would you like directions to our facility?',
         
         // Schedule
         'timing': 'We\'re open daily from 5 AM to 11 PM. When would you like to visit?',
@@ -965,7 +1171,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
           <!-- Contact Info -->
-          <div class="col-lg-3 col-md-6 col-sm-12 col-6">
+          <div class="col-lg-4 col-md-6  col-sm-12 mb-4">
               <div class="footer-widget">
                   <h3 class="widget-title">Contact Info</h3>
                   <ul class="contact-info">
@@ -986,17 +1192,30 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
 
           <!-- Newsletter -->
-          <div class="col-lg-3 col-md-6 col-sm-12 col-6">
+          <div class="col-lg-4 col-md-6  col-sm-12 mb-4">
               <div class="footer-widget">
                   <h3 class="widget-title">Stay Updated</h3>
                   <p class="widget-text">Stay updated on gym trends, workouts, and fitness tips to enhance performance.</p>
                   <form class="newsletter-form">
-                      <div class="input-group">
-                          <input type="email" class="form-control" placeholder="Enter your email">
-                          <button class="btn btn-primary" type="submit">Subscribe</button>
-                      </div>
-                  </form>
+                    <div class="d-none d-xl-block">
+                    <div class="input-group ">
+                        <input type="email" class="form-control" placeholder="Enter your email">
+                        <button class="btn btn-primary" type="submit">Subscribe</button>
+                    </div>
+                    </div>
+                    
+                    <div class="d-xl-none d-block input-group">
+                      <input type="email" class="form-control w-100" placeholder="Enter your email">
+                    
+                  </div>
+                  <div class="d-xl-none d-block">
+                  <button class="btn btn-primary" type="submit">Subscribe</button>
+                </div>
+                </form>
               </div>
+              
+              
+          
           </div>
       </div>
   </div>
@@ -1015,8 +1234,15 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
   </div>
 </div>
+<style>
+  .footer-copyright {
+      background: linear-gradient(45deg, #1a1a1a, #2d2d2d);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 0;
+      padding-bottom: 20px;
+  }
+</style>
 
-<!-- Add these responsive styles in your existing style section -->
 <style>
     /* Mobile Responsive Styles */
     @media (max-width: 768px) {
@@ -1321,6 +1547,6 @@ function validateAndSubmitForm(event) {
        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>  
     <script>
     AOS.init();
-    </script>       
+    </script>        
     </body>
   </html>

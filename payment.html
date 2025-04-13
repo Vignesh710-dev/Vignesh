@@ -141,7 +141,7 @@
             <div class="col-md-6 col-lg-3">
                 <div class="payment-card text-center">
                     <h3 class="text-white">Basic Plan</h3>
-                    <div class="price">₹999</div>
+                    <div class="price  text-white">₹999</div>
                     <p class="text-muted">per month</p>
                     <ul class="feature-list">
                         <li class="text-white">Access to Gym Equipment</li>
@@ -157,7 +157,7 @@
             <div class="col-md-6 col-lg-3">
                 <div class="payment-card text-center">
                     <h3 class="text-white">Standard Plan</h3>
-                    <div class="price">₹1,499</div>
+                    <div class="price  text-white">₹1,499</div>
                     <p class="text-muted">per month</p>
                     <ul class="feature-list">
                         <li class="text-white">All Basic Features</li>
@@ -173,7 +173,7 @@
             <div class="col-md-6 col-lg-3">
                 <div class="payment-card text-center">
                     <h3 class="text-white">Premium Plan</h3>
-                    <div class="price">₹1,999</div>
+                    <div class="price text-white">₹1,999</div>
                     <p class="text-muted">per month</p>
                     <ul class="feature-list">
                         <li class="text-white">All Standard Features</li>
@@ -189,7 +189,7 @@
             <div class="col-md-6 col-lg-3">
                 <div class="payment-card text-center">
                     <h3 class="text-white">Elite Plan</h3>
-                    <div class="price">₹2,499</div>
+                    <div class="price  text-white">₹2,499</div>
                     <p class="text-muted">per month</p>
                     <ul class="feature-list">
                         <li class="text-white">All Premium Features</li>
@@ -294,5 +294,204 @@
             localStorage.setItem('payments', JSON.stringify(payments));
         }
     </script>
-</body>
-</html>
+
+    <!-- Add this right before the closing </body> tag -->
+    <div id="ai-assistant" class="chatbot-container">
+        <div class="chatbot-header">
+            <h5>Muvi Fitness AI Assistant</h5>
+            <button id="close-chat">×</button>
+        </div>
+        <div id="chat-messages"></div>
+        <div class="chat-input">
+            <input type="text" id="user-message" placeholder="Ask about memberships, training...">
+            <button id="send-message">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+    <!-- Add this in the <head> section after other CSS links -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Update the chat toggle button -->
+    <button id="toggle-chat" class="chat-toggle">
+        <i class="fas fa-comments"></i>
+    </button>
+    
+    <!-- Update the send button -->
+    
+    
+    <!-- Add this in the <head> section -->
+    <style>
+        .chatbot-container {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 350px;
+            height: 500px;
+            background: rgba(26, 26, 26, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(255, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+            border: 1px solid rgba(255, 0, 0, 0.2);
+        }
+    
+        .chatbot-header {
+            padding: 15px;
+            background: linear-gradient(45deg, #ff0000, #cc0000);
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+    
+        #chat-messages {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+    
+        .chat-input {
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 0 0 15px 15px;
+        }
+    
+        .chat-input input {
+            flex-grow: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+    
+        .chat-input button {
+            background: #ff0000;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+    
+        .chat-input button:hover {
+            transform: scale(1.1);
+        }
+    
+        .chat-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff0000, #cc0000);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
+            z-index: 999;
+            transition: transform 0.3s;
+        }
+    
+        .chat-toggle:hover {
+            transform: scale(1.1);
+        }
+    
+        .message {
+            margin: 10px 0;
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+    
+        .user-message {
+            background: rgba(255, 0, 0, 0.2);
+            margin-left: auto;
+            color: white;
+        }
+    
+        .ai-message {
+            background: rgba(255, 255, 255, 0.1);
+            margin-right: auto;
+            color: white;
+        }
+    </style>
+    
+    <!-- Add this before the closing </body> tag -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const chatbot = document.getElementById('ai-assistant');
+        const toggleBtn = document.getElementById('toggle-chat');
+        const closeBtn = document.getElementById('close-chat');
+        const sendBtn = document.getElementById('send-message');
+        const userInput = document.getElementById('user-message');
+        const messagesContainer = document.getElementById('chat-messages');
+    
+        toggleBtn.addEventListener('click', () => {
+            chatbot.style.display = chatbot.style.display === 'none' ? 'flex' : 'none';
+            if(chatbot.style.display === 'flex') {
+                addMessage("Hello! I'm your Muvi Fitness AI assistant. How can I help you today?", 'ai');
+            }
+        });
+    
+        closeBtn.addEventListener('click', () => {
+            chatbot.style.display = 'none';
+        });
+    
+        function addMessage(text, sender) {
+            const message = document.createElement('div');
+            message.classList.add('message', `${sender}-message`);
+            message.textContent = text;
+            messagesContainer.appendChild(message);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+    
+        function handleUserMessage() {
+            const userText = userInput.value.trim();
+            if (!userText) return;
+    
+            addMessage(userText, 'user');
+            userInput.value = '';
+    
+            // Simple AI response logic
+            setTimeout(() => {
+                let response = getAIResponse(userText.toLowerCase());
+                addMessage(response, 'ai');
+            }, 500);
+        }
+    
+        function getAIResponse(text) {
+            const responses = {
+                'price': 'Our membership plans start from ₹999/month. Would you like to know more about our packages?',
+                'membership': 'We offer four membership plans:\n- Basic (₹999)\n- Standard (₹1,499)\n- Premium (₹1,999)\n- Elite (₹2,499)',
+                'trainer': 'Our expert trainers provide personalized guidance. Would you like to schedule a consultation?',
+                'workout': 'We offer various workout programs including strength training, cardio, and flexibility training.',
+                'facilities': 'We have state-of-the-art equipment, personal trainers, and modern amenities.',
+                'timing': 'We\'re open from 5 AM to 11 PM on weekdays and 6 AM to 10 PM on weekends.'
+            };
+    
+            for (let keyword in responses) {
+                if (text.includes(keyword)) {
+                    return responses[keyword];
+                }
+            }
+    
+            return "I can help you with membership details, training programs, facilities, and schedules. What would you like to know?";
+        }
+    
+        sendBtn.addEventListener('click', handleUserMessage);
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleUserMessage();
+        });
+    });
+    </script>

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muvi Fitness - Admission</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+        <div class="bg bg-dark pt-5 pb-5">
+        <div class="container" data-aos="fade-up">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="glass-box p-4">                       
+                         <h3 class="text-white text-center mb-4">Admission Form</h3>
+                        <!-- Add this in the head section after existing links -->
+                        <style>
+                            body {
+                                background: linear-gradient(135deg, #1e1e1e, #2b2b2b);
+                                min-height: 100vh;
+                            }
+
+                            .glass-box {
+                                background: linear-gradient(135deg, rgba(255, 0, 0, 0.05), rgba(0, 0, 0, 0.2));
+                                backdrop-filter: blur(10px);
+                                border-radius: 20px;
+                                border: 2px solid rgba(255, 0, 0, 0.1);
+                                box-shadow: 0 8px 32px rgba(255, 0, 0, 0.2);
+                                padding: 30px !important;
+                            }
+
+                            .glass-box:hover {
+                                border-color: rgba(255, 0, 0, 0.3);
+                                box-shadow: 0 12px 40px rgba(255, 0, 0, 0.3);
+                            }
+
+                            .form-control {
+                                background: rgba(20, 20, 20, 0.6);
+                                border: 1px solid rgba(255, 0, 0, 0.2);
+                                color: #ffffff;
+                                padding: 12px;
+                                border-radius: 10px;
+                                transition: all 0.3s ease;
+                            }
+
+                            .form-control:focus {
+                                background: rgba(30, 30, 30, 0.8);
+                                border-color: #ff0000;
+                                box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+                            }
+
+                            .form-group label {
+                                color: #ff3333;
+                                font-weight: 600;
+                                text-transform: uppercase;
+                                font-size: 0.9rem;
+                                margin-bottom: 10px;
+                            }
+
+                            .animated-submit-btn {
+                                background: linear-gradient(45deg, #ff0000, #cc0000);
+                                border: none;
+                                padding: 15px 30px;
+                                font-weight: 600;
+                                letter-spacing: 1px;
+                                text-transform: uppercase;
+                                border-radius: 10px;
+                                transition: all 0.3s ease;
+                            }
+
+                            .animated-submit-btn:hover {
+                                background: linear-gradient(45deg, #cc0000, #ff0000);
+                                transform: translateY(-2px);
+                                box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+                            }
+
+                            .glass-box h3 {
+                                color: #ff0000 !important;
+                                font-weight: 700;
+                                text-transform: uppercase;
+                                letter-spacing: 2px;
+                                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+                                margin-bottom: 30px;
+                            }
+
+                            select.form-control option {
+                                background: #1a1a1a;
+                                color: white;
+                                padding: 10px;
+                            }
+
+                            .form-group {
+                                margin-bottom: 25px;
+                            }
+                        </style>
+                        
+                        <!-- Update the form submission code -->
+                        <form id="admissionForm" action="https://formspree.io/f/mgvarrvr" method="POST" onsubmit="return submitAdmission(event)">
+                            <div class="form-group">
+                                <label class="text-white">Full Name</label>
+                                <input type="text" name="name" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="text-white">Email</label>
+                                <input type="email" name="email" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="text-white">Phone</label>
+                                <input type="tel" name="phone" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="text-white">Age</label>
+                                <input type="number" name="age" class="form-control" required min="16" max="99">
+                            </div>
+                            <div class="form-group">
+                                <label class="text-white">Membership Package</label>
+                                <select name="package" class="form-control" required>
+                                    <option value=""></option>
+                                    <option value="basic">Basic (₹999/month)</option>
+                                    <option value="standard">Standard (₹1,499/month)</option>
+                                    <option value="premium">Premium (₹1,999/month)</option>
+                                    <option value="elite">Elite (₹2,499/month)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="text-white">Training Mode</label>
+                                <select name="mode" class="form-control" required>
+                                    <option value=""></option>
+                                    <option value="offline">Offline (In-Person)</option>
+                                    <option value="online">Online Training</option>
+                                    <option value="hybrid">Hybrid (Mix of Both)</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-danger btn-block animated-submit-btn">Submit Application</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add this new section after the admission form container -->
+    <div class="container mt-5" data-aos="fade-up">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="glass-box p-4 h-100">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-dumbbell fa-3x" style="color: #ff0000;"></i>
+                    </div>
+                    <h4 class="text-center mb-3">Premium Equipment</h4>
+                    <ul class="list-unstyled text-white">
+                        <li class="mb-2"><i class="fas fa-check text-danger mr-2"></i>Latest Cardio Machines</li>
+                        <li class="mb-2"><i class="fas fa-check text-danger mr-2"></i>Free Weights Area</li>
+                        <li class="mb-2"><i class="fas fa-check text-danger mr-2"></i>Functional Training Zone</li>
+                        <li class="mb-2"><i class="fas fa-check text-danger mr-2"></i>Recovery Equipment</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="glass-box p-4 h-100">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-users fa-3x" style="color: #ff0000;"></i>
+                    </div>
+                    <h4 class="text-center mb-3">Expert Trainers</h4>
+                    <ul class="list-unstyled text-white">
+                        <li class="mb-2"><i class="fas fa-check text-danger mr-2"></i>Certified Professionals</li>
+                        <li class="mb-2"><i class="fas fa-check text-danger mr-2"></i>Personalized Programs</li>
+                        <li class="mb-2"><i class="fas fa-check text-danger mr-2"></i>Nutrition Guidance</li>
+                        <li class="mb-2"><i class="fas fa-check text-danger mr-2"></i>Progress Tracking</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="glass-box p-4 h-100">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-star fa-3x" style="color: #ff0000;"></i>
+                    </div>
+                    <h4 class="text-center mb-3">Extra Benefits</h4>
+                    <ul class="list-unstyled text-white">
+                        <li class="mb-2"><i class="fas fa-check text-danger mr-2"></i>24/7 Access</li>
+                        <li class="mb-2"><i class="fas fa-check text-danger mr-2"></i>Mobile App Access</li>
+                        <li class="mb-2"><i class="fas fa-check text-danger mr-2"></i>Group Classes</li>
+                        <li class="mb-2"><i class="fas fa-check text-danger mr-2"></i>Locker Facilities</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        /* Add this to your existing styles */
+        .home-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #ff0000, #cc0000);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.2);
+        }
+
+        .home-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 0, 0, 0.3);
+            background: linear-gradient(45deg, #cc0000, #ff0000);
+            color: white;
+            text-decoration: none;
+        }
+
+        .home-btn i {
+            margin-right: 8px;
+        }
+    </style>
+
+    <!-- Add this right after the opening body tag -->
+    <a href="index.html" class="home-btn">
+        <i class="fas fa-home"></i> Home
+    </a>
+    <style>
+        .glass-box h4 {
+            color: #ff0000;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    
+        .glass-box i.fa-3x {
+            transition: transform 0.3s ease;
+        }
+    
+        .glass-box:hover i.fa-3x {
+            transform: scale(1.1);
+        }
+    
+        .list-unstyled li {
+            padding: 8px 0;
+            transition: transform 0.2s ease;
+        }
+    
+        .list-unstyled li:hover {
+            transform: translateX(5px);
+        }
+    
+        .text-danger {
+            color: #ff0000 !important;
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Replace the submitAdmission function -->
+    <script>
+        // Initialize AOS
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                once: true,
+                offset: 50
+            });
+        });
+    
+        async function submitAdmission(event) {
+            event.preventDefault();
+            
+            try {
+                const form = event.target;
+                const formData = new FormData(form);
+                
+                // Show loading state
+                Swal.fire({
+                    title: 'Processing...',
+                    text: 'Submitting your application',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+    
+                // Submit to Formspree
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+    
+                if (response.ok) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Your application has been submitted. We will contact you shortly!',
+                        icon: 'success',
+                        confirmButtonColor: '#28a745'
+                    }).then(() => {
+                        window.location.href = 'index.html';
+                    });
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                Swal.fire({
+                    title: 'Error',
+                    text: 'There was a problem submitting your application. Please try again.',
+                    icon: 'error',
+                    confirmButtonColor: '#dc3545'
+                });
+            }
+            return false;
+        }
+    </script>
+    
+    <!-- Add AOS script before closing body tag -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+    function analyzeGoals() {
+        const weight = parseFloat(document.getElementById('weight').value);
+        const targetWeight = parseFloat(document.getElementById('targetWeight').value);
+        const height = parseFloat(document.getElementById('height').value);
+        const exerciseHours = parseFloat(document.getElementById('exerciseHours').value);
+    
+        if (!weight || !targetWeight || !height || !exerciseHours) {
+            Swal.fire({
+                title: 'Missing Information',
+                text: 'Please fill in all fields for analysis',
+                icon: 'warning',
+                confirmButtonColor: '#ff3c5f'
+            });
+            return;
+        }
+    
+        // Calculate BMI
+        const bmi = (weight / ((height/100) * (height/100))).toFixed(1);
+        const targetBmi = (targetWeight / ((height/100) * (height/100))).toFixed(1);
+        
+        // Calculate weekly goal
+        const weightDiff = Math.abs(weight - targetWeight);
+        const weeklyGoal = (weightDiff / 12).toFixed(1); // 12 weeks program
+        
+        // Show loading animation
+        Swal.fire({
+            title: 'Analyzing...',
+            text: 'Our AI is processing your goals',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+    
+        setTimeout(() => {
+            const analysisDiv = document.getElementById('aiAnalysis');
+            let recommendedPlan = '';
+            let intensity = '';
+    
+            if (bmi > 25) {
+                recommendedPlan = 'Weight Loss Focus';
+                intensity = exerciseHours >= 4 ? 'Premium' : 'Standard';
+            } else if (bmi < 18.5) {
+                recommendedPlan = 'Muscle Gain Focus';
+                intensity = exerciseHours >= 4 ? 'Premium' : 'Standard';
+            } else {
+                recommendedPlan = 'Fitness Maintenance';
+                intensity = exerciseHours >= 6 ? 'Elite' : 'Premium';
+            }
+    
+            analysisDiv.innerHTML = `
+                <div class="alert alert-info">
+                    <h4 class="alert-heading">Your AI Analysis Results</h4>
+                    <p><strong>Current BMI:</strong> ${bmi} (${getBmiCategory(bmi)})</p>
+                    <p><strong>Target BMI:</strong> ${targetBmi} (${getBmiCategory(targetBmi)})</p>
+                    <p><strong>Weekly Goal:</strong> ${weeklyGoal}kg per week</p>
+                    <p><strong>Recommended Program:</strong> ${recommendedPlan}</p>
+                    <p><strong>Suggested Package:</strong> ${intensity} Plan</p>
+                    <hr>
+                    <p class="mb-0">Based on your goals and availability, we recommend the ${intensity} package for optimal results.</p>
+                </div>
+            `;
+            analysisDiv.style.display = 'block';
+            
+            // Auto-select the recommended package
+            document.querySelector('select[name="package"]').value = intensity.toLowerCase();
+            
+            Swal.close();
+        }, 2000);
+    }
+    
+    function getBmiCategory(bmi) {
+        if (bmi < 18.5) return 'Underweight';
+        if (bmi < 25) return 'Normal weight';
+        if (bmi < 30) return 'Overweight';
+        return 'Obese';
+    }
+    </script>
+   
+</body>
+</html>
