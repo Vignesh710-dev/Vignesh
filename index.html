@@ -618,7 +618,7 @@
         <h1 class="threed-heading mb-4 text-center">BMI Calculator</h1>
         <div class="container" data-aos="zoom-in" data-aos-duration="800">
             <div class="row justify-content-center">
-                <div class="col-sm-12 col-md-8 col-lg-6 box2">
+                <div class="col-12 col-md-8 col-lg-6">
                     <div class="glass-box p-4">
                         <div class="text-center mb-4">
                             <i class="fas fa-calculator fa-3x" style="color: #ff3c5f;"></i>
@@ -698,7 +698,7 @@
   <div class="container">
       <div class="row g-4">
           <!-- About Section -->
-          <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+          <div class="col-lg-3 col-md-6 col-sm-6 col-12">
               <div class="footer-widget">
                   <h3 class="widget-title">Who We Are</h3>
                   <p class="widget-text">We are a dedicated fitness community focused on strength, health, and motivation, helping individuals reach their goals with expert guidance.</p>
@@ -717,20 +717,255 @@
           </div>
 
           <!-- Quick Links -->
-          <div class="col-lg-3 col-md-6 col-sm-6 col-6">
-              <div class="footer-widget">
-                  <h3 class="widget-title">Quick Links</h3>
-                  <ul class="widget-links">
-                      <li><a href="#about">About Us</a></li>
-                      <li><a href="#contact">Contact</a></li>
-                      <li><a href="#policy">Privacy Policy</a></li>
-                      <li><a href="#team">Our Team</a></li>
-                  </ul>
-              </div>
-          </div>
+         <!-- Chatbot Container -->
+<div id="chatbot-container" class="chatbot-hidden">
+  <div class="chatbot-header">
+      <h5>Muvi Fitness Assistant</h5>
+      <button id="close-chatbot">×</button>
+  </div>
+  <div id="chatbot-messages"></div>
+  <div class="chatbot-input">
+      <input type="text" id="user-input" placeholder="Type your message...">
+      <button id="send-message">Send</button>
+  </div>
+</div>
+<button id="chatbot-toggle" class="chatbot-toggle-btn">
+  <i class="fas fa-comments"></i>
+</button>
 
+<!-- Add this to your existing style section -->
+<style>
+  .chatbot-toggle-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(45deg,#c11b3c, #3e3b3b);
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow:0 4px 12px rgba(193, 27, 60, 0.3);
+      z-index: 1000;
+      transition: transform 0.3s;
+  }
+
+  .chatbot-toggle-btn:hover {
+      transform: scale(1.1);
+  }
+
+  #chatbot-container {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: 350px;
+      height: 500px;
+      background: rgba(62, 59, 59, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      box-shadow: 0 8px 32px rgba(193,27,60,0.2);
+      display: flex;
+      flex-direction: column;
+      z-index: 1000;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .chatbot-hidden {
+      transform: translateY(100%);
+      opacity: 0;
+      pointer-events: none;
+  }
+
+  .chatbot-header {
+      padding: 15px;
+      background: linear-gradient(45deg,#c11b3c, #3e3b3b);
+      border-radius: 15px 15px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+  }
+
+  .chatbot-header h5 {
+      margin: 0;
+  }
+
+  #close-chatbot {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+  }
+
+  #chatbot-messages {
+      flex-grow: 1;
+      padding: 15px;
+      overflow-y: auto;
+  }
+
+  .chatbot-input {
+      padding: 15px;
+      display: flex;
+      gap: 10px;
+  }
+
+  #user-input {
+    background: rgba(62, 59, 59, 0.8);
+    border: 1px solid rgba(193, 27, 60, 0.3);
+    color: white;
+  }
+
+  #send-message {
+    background: linear-gradient(45deg, #c11b3c, #3e3b3b);
+    color: white;
+  }
+
+  .message {
+      margin-bottom: 10px;
+      padding: 10px 15px;
+      border-radius: 15px;
+      max-width: 80%;
+      word-wrap: break-word;
+  }
+
+  .user-message {
+      background: rgba(193, 27, 60, 0.2);
+      margin-left: auto;
+      color: white;
+  }
+
+  .bot-message {
+      background: rgba(62, 59, 59, 0.5);
+      margin-right: auto;
+      color: white;
+  }
+
+  @media (max-width: 768px) {
+      #chatbot-container {
+          width: 90%;
+          right: 5%;
+          bottom: 80px;
+      }
+  }
+</style>
+
+<!-- Add this before the closing body tag -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const chatbotToggle = document.getElementById('chatbot-toggle');
+  const chatbotContainer = document.getElementById('chatbot-container');
+  const closeButton = document.getElementById('close-chatbot');
+  const sendButton = document.getElementById('send-message');
+  const userInput = document.getElementById('user-input');
+  const messagesContainer = document.getElementById('chatbot-messages');
+
+  // Initial greeting
+  setTimeout(() => {
+      addMessage("Hi! I'm your Muvi Fitness Assistant. How can I help you today?", 'bot');
+  }, 1000);
+
+  chatbotToggle.addEventListener('click', () => {
+      chatbotContainer.classList.toggle('chatbot-hidden');
+  });
+
+  closeButton.addEventListener('click', () => {
+      chatbotContainer.classList.add('chatbot-hidden');
+  });
+
+  function addMessage(text, sender) {
+      const message = document.createElement('div');
+      message.classList.add('message', `${sender}-message`);
+      message.textContent = text;
+      messagesContainer.appendChild(message);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+
+  function handleUserMessage(userText) {
+      addMessage(userText, 'user');
+      
+      // Simple response logic
+    const responses = {
+        // Basic greetings
+        'hello': 'Welcome to Muvi Fitness! I\'m your virtual fitness assistant. How can I help you achieve your fitness goals today?',
+        'hi': 'Hi! I\'m here to guide you through Muvi Fitness services and programs. What would you like to know?',
+        
+        // Trainer specific
+        'trainer': 'Meet Vignesh, our expert fitness trainer with 10 years of experience. He specializes in strength training, cardio, and personalized workout plans. Would you like to schedule a consultation?',
+        'vignesh': 'Trainer Vignesh is dedicated to helping you achieve your fitness goals with expert guidance and personalized workout plans. His approach focuses on strength, endurance, and confidence-building.',
+        
+        // Programs and Services
+        'workout': 'At Muvi Fitness, we offer:\n- Personalized strength training\n- Cardio programs\n- Flexibility workouts\n- Group sessions\nWhat interests you?',
+        'online training': 'Our online training program includes live sessions, personalized workout plans, and real-time guidance from Trainer Vignesh. Would you like more details?',
+        
+        // Membership
+        'membership': 'Choose from our premium packages:\n- Basic (₹999/month): Essential training\n- Standard (₹1,499/month): Advanced programs\n- Premium (₹1,999/month): Personal coaching\n- Elite (₹2,499/month): VIP training',
+        'price': 'Our membership plans start from ₹999/month. Each plan includes personalized attention and expert guidance. Would you like to know more about our packages?',
+        
+        // Facilities
+        'facilities': 'Muvi Fitness offers state-of-the-art equipment, certified trainers, and a motivating environment. Our facility is open from 5 AM to 11 PM daily.',
+        'equipment': 'We have premium fitness equipment for strength training, cardio, and functional fitness. What type of equipment are you interested in?',
+        
+        // Special Features
+        'bmi': 'Try our BMI calculator to track your fitness progress! Would you like me to guide you through the calculation?',
+        'certification': 'Our gym is fully certified, and Trainer Vignesh holds multiple fitness certifications with 10 years of experience.',
+        
+        // Benefits
+        'benefits': 'At Muvi Fitness, you\'ll experience:\n- Expert guidance\n- Personalized attention\n- Progress tracking\n- Confidence building\n- Community support',
+        'results': 'Our members see significant improvements in strength, endurance, and overall fitness under Trainer Vignesh\'s guidance.',
+        
+        // Contact and Location
+        'contact': 'You can reach us at:\nPhone: +91 90807 00642\nEmail: vigneshvcoder@gmail.com\nOr visit our facility in Chennai.',
+        'location': 'We\'re conveniently located in Chennai. Would you like directions to our facility?',
+        
+        // Schedule
+        'timing': 'We\'re open daily from 5 AM to 11 PM. When would you like to visit?',
+        'schedule': 'We can create a personalized workout schedule that fits your routine. What timing works best for you?'
+    };
+
+    setTimeout(() => {
+        let botResponse = "Welcome to Muvi Fitness! I can help you with:\n" +
+            "💪 Training Programs\n" +
+            "🏋️ Personal Training with Vignesh\n" +
+            "📱 Online Classes\n" +
+            "💳 Membership Plans\n" +
+            "📊 BMI Calculator\n" +
+            "📍 Location & Timing\n\n" +
+            "What would you like to know about?";
+        
+        // Check for keywords in user message
+        for (let keyword in responses) {
+            if (userText.toLowerCase().includes(keyword)) {
+                botResponse = responses[keyword];
+                break;
+            }
+        }
+        
+        addMessage(botResponse, 'bot');
+    }, 1000);
+}
+
+  sendButton.addEventListener('click', () => {
+      const userText = userInput.value.trim();
+      if (userText) {
+          handleUserMessage(userText);
+          userInput.value = '';
+      }
+  });
+
+  userInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' && userInput.value.trim()) {
+          handleUserMessage(userInput.value.trim());
+          userInput.value = '';
+      }
+  });
+});
+</script>
           <!-- Contact Info -->
-          <div class="col-lg-3 col-md-6 col-sm-12 col-12">
+          <div class="col-lg-3 col-md-6 col-sm-12 col-6">
               <div class="footer-widget">
                   <h3 class="widget-title">Contact Info</h3>
                   <ul class="contact-info">
@@ -751,7 +986,7 @@
           </div>
 
           <!-- Newsletter -->
-          <div class="col-lg-3 col-md-6 col-sm-12 col-12">
+          <div class="col-lg-3 col-md-6 col-sm-12 col-6">
               <div class="footer-widget">
                   <h3 class="widget-title">Stay Updated</h3>
                   <p class="widget-text">Stay updated on gym trends, workouts, and fitness tips to enhance performance.</p>
@@ -780,6 +1015,105 @@
       </div>
   </div>
 </div>
+
+<!-- Add these responsive styles in your existing style section -->
+<style>
+    /* Mobile Responsive Styles */
+    @media (max-width: 768px) {
+        .container2, .container3 {
+            padding: 20px 10px;
+        }
+
+        .benefit-card {
+            margin-bottom: 15px;
+            padding: 15px !important;
+        }
+
+        .glass-box {
+            padding: 15px !important;
+            flex-direction: column !important;
+            text-align: center;
+        }
+
+        .glass-box img {
+            width: 100% !important;
+            max-width: 200px;
+            height: auto !important;
+            margin: 0 auto 15px !important;
+        }
+
+        .first_heading {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .secound-heading {
+            font-size: 20px;
+        }
+
+        .four-heading {
+            font-size: 18px;
+        }
+
+        .logo-2-imge {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            margin: 0 auto 15px;
+        }
+
+        .experience-container {
+            padding: 15px;
+        }
+
+        .cert-card {
+            margin-bottom: 15px;
+        }
+
+        .footer-widget {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .social-links {
+            justify-content: center;
+        }
+
+        .widget-links, .contact-info {
+            text-align: left;
+            padding-left: 20px;
+        }
+
+        button {
+            width: 100%;
+            max-width: 200px;
+            margin: 10px auto;
+        }
+
+        .animated-submit-btn {
+            width: 100%;
+            max-width: 200px;
+        }
+
+        /* Adjust form elements */
+        .form-control {
+            margin-bottom: 15px;
+        }
+
+        /* Adjust spacing for sections */
+        .mb-4 {
+            margin-bottom: 1.5rem !important;
+        }
+
+        .pt-5 {
+            padding-top: 2rem !important;
+        }
+
+        .pb-5 {
+            padding-bottom: 2rem !important;
+        }
+    }
+</style>
 <!-- ... existing code ... -->
       
        <script>
