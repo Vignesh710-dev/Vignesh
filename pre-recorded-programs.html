@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-recorded Programs - Fitness Hub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .video-card {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border-radius: 15px;
+            padding: 15px;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+            border: 1px solid #333;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 77, 77, 0.2);
+        }
+
+        .category-filter {
+            background: #2a2a2a;
+            border: 1px solid #ff4d4d;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-filter:hover, .category-filter.active {
+            background: #ff4d4d;
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .difficulty-badge {
+            background: #ff4d4d;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            margin-right: 10px;
+        }
+
+        .duration-badge {
+            background: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+        }
+
+        .search-box {
+            background: #2a2a2a;
+            border: 1px solid #ff4d4d;
+            color: white;
+            border-radius: 25px;
+            padding: 10px 20px;
+        }
+
+        .search-box:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(255, 77, 77, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Pre-recorded Workout Programs</h1>
+            <a href="online-training.html" class="btn btn-outline-light">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+        </div>
+
+        <!-- Search and Filters -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <input type="text" class="form-control search-box" placeholder="Search workouts...">
+            </div>
+            <div class="col-12 mt-3">
+                <button class="category-filter active">All</button>
+                <button class="category-filter">Strength Training</button>
+                <button class="category-filter">Cardio</button>
+                <button class="category-filter">HIIT</button>
+                <button class="category-filter">Yoga</button>
+                <button class="category-filter">Core</button>
+            </div>
+        </div>
+
+        <!-- Video Grid -->
+        <div class="row" id="videoGrid">
+            <!-- Video cards will be dynamically populated here -->
+        </div>
+    </div>
+
+    <script>
+        // Sample video data - In real application, this would come from a database
+        const workoutVideos = [
+            {
+                title: "Full Body HIIT Workout",
+                thumbnail: "https://img.youtube.com/vi/ml6cT4AZdqI/maxresdefault.jpg",
+                duration: "30 mins",
+                difficulty: "Intermediate",
+                category: "HIIT",
+                description: "High-intensity interval training for full body conditioning",
+                videoUrl: "https://www.youtube.com/embed/7pUrLty9wkA"
+            },
+            {
+                title: "Upper Body Strength",
+                thumbnail: "https://img.youtube.com/vi/DHOPWvO3ZcI/maxresdefault.jpg",
+                duration: "45 mins",
+                difficulty: "Advanced",
+                category: "Strength Training",
+                description: "Complete upper body workout focusing on building strength",
+                videoUrl: "https://www.youtube.com/embed/DHOPWvO3ZcI"
+            }
+        ];
+
+        function displayVideos(videos) {
+            const videoGrid = document.getElementById('videoGrid');
+            videoGrid.innerHTML = videos.map(video => `
+                <div class="col-md-4 mb-4">
+                    <div class="video-card">
+                        <img src="${video.thumbnail}" alt="${video.title}" class="video-thumbnail">
+                        <h4>${video.title}</h4>
+                        <div class="mb-2">
+                            <span class="difficulty-badge">${video.difficulty}</span>
+                            <span class="duration-badge"><i class="far fa-clock"></i> ${video.duration}</span>
+                        </div>
+                        <p class="text-muted">${video.description}</p>
+                        <button class="btn btn-danger w-100" onclick="playVideo('${video.videoUrl}', '${video.title}')">
+                            <i class="fas fa-play-circle"></i> Start Workout
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Add this function to handle video playback
+        function playVideo(videoUrl, title) {
+            const modal = `
+                <div class="modal fade" id="videoModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content bg-dark">
+                            <div class="modal-header border-0">
+                                <h5 class="modal-title text-white">${title}</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body p-0">
+                                <div class="ratio ratio-16x9">
+                                    <iframe src="${videoUrl}" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modal);
+            const videoModal = new bootstrap.Modal(document.getElementById('videoModal'));
+            videoModal.show();
+            document.getElementById('videoModal').addEventListener('hidden.bs.modal', function () {
+                this.remove();
+            });
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            displayVideos(workoutVideos);
+
+            // Add filter functionality
+            const filters = document.querySelectorAll('.category-filter');
+            filters.forEach(filter => {
+                filter.addEventListener('click', () => {
+                    filters.forEach(f => f.classList.remove('active'));
+                    filter.classList.add('active');
+                    
+                    const category = filter.textContent;
+                    if (category === 'All') {
+                        displayVideos(workoutVideos);
+                    } else {
+                        const filtered = workoutVideos.filter(video => 
+                            video.category === category
+                        );
+                        displayVideos(filtered);
+                    }
+                });
+            });
+
+            // Add search functionality
+            const searchBox = document.querySelector('.search-box');
+            searchBox.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                const filtered = workoutVideos.filter(video =>
+                    video.title.toLowerCase().includes(searchTerm) ||
+                    video.description.toLowerCase().includes(searchTerm)
+                );
+                displayVideos(filtered);
+            });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

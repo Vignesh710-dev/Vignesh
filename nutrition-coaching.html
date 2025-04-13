@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrition Coaching - Fitness Hub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .nutrition-card {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+            border: 1px solid #333;
+        }
+
+        .nutrition-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 77, 77, 0.2);
+        }
+
+        .category-filter {
+            background: #2a2a2a;
+            border: 1px solid #ff4d4d;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-filter:hover, .category-filter.active {
+            background: #ff4d4d;
+        }
+
+        .recipe-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .meal-type {
+            background: #ff4d4d;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            margin-right: 10px;
+        }
+
+        .calorie-count {
+            background: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+        }
+
+        .search-box {
+            background: #2a2a2a;
+            border: 1px solid #ff4d4d;
+            color: white;
+            border-radius: 25px;
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Nutrition Coaching & Meal Plans</h1>
+            <a href="online-training.html" class="btn btn-outline-light">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+        </div>
+
+        <!-- Search and Filters -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <input type="text" class="form-control search-box" placeholder="Search meals and recipes...">
+            </div>
+            <div class="col-12 mt-3">
+                <button class="category-filter active">All</button>
+                <button class="category-filter">Breakfast</button>
+                <button class="category-filter">Lunch</button>
+                <button class="category-filter">Dinner</button>
+                <button class="category-filter">Snacks</button>
+                <button class="category-filter">Protein-Rich</button>
+            </div>
+        </div>
+
+        <!-- Nutrition Content Grid -->
+        <div class="row" id="nutritionGrid">
+            <!-- Content will be dynamically populated -->
+        </div>
+    </div>
+
+    <script>
+        const nutritionContent = [
+            {
+                title: "High-Protein Breakfast Bowl",
+                thumbnail: "https://img.youtube.com/vi/dLairfd8bZU/maxresdefault.jpg",
+                mealType: "Breakfast",
+                calories: "450 kcal",
+                description: "Protein-packed breakfast bowl with eggs, quinoa, and avocado",
+                ingredients: ["Eggs", "Quinoa", "Avocado", "Spinach"],
+                videoUrl: "https://www.youtube.com/embed/dLairfd8bZU"
+            },
+            {
+                title: "Healthy Lunch Meal Prep",
+                thumbnail: "https://img.youtube.com/vi/1N6hbRbyAeQ/maxresdefault.jpg",
+                mealType: "Lunch",
+                calories: "550 kcal",
+                description: "Nutritious lunch prep with lean protein and vegetables",
+                ingredients: ["Chicken Breast", "Brown Rice", "Mixed Vegetables"],
+                videoUrl: "https://www.youtube.com/embed/1N6hbRbyAeQ"
+            },
+            {
+                title: "Best Morning Food",
+                thumbnail: "https://img.youtube.com/vi/HAmeeWuQWx0/maxresdefault.jpg",
+                mealType: "Lunch",
+                calories: "550 kcal",
+                description: "Nutritious lunch prep with lean protein and vegetables",
+                ingredients: ["Watch This Video"],
+                videoUrl: "https://www.youtube.com/embed/HAmeeWuQWx0"
+            }
+        ];
+
+        function displayNutrition(content) {
+            const nutritionGrid = document.getElementById('nutritionGrid');
+            nutritionGrid.innerHTML = content.map(item => `
+                <div class="col-md-4 mb-4">
+                    <div class="nutrition-card">
+                        <img src="${item.thumbnail}" alt="${item.title}" class="recipe-image">
+                        <h4>${item.title}</h4>
+                        <div class="mb-2">
+                            <span class="meal-type">${item.mealType}</span>
+                            <span class="calorie-count"><i class="fas fa-fire"></i> ${item.calories}</span>
+                        </div>
+                        <p>${item.description}</p>
+                        <div class="ingredients mb-3">
+                            <h6>Key Ingredients:</h6>
+                            <p>${item.ingredients.join(", ")}</p>
+                        </div>
+                        <button class="btn btn-danger w-100" onclick="playVideo('${item.videoUrl}', '${item.title}')">
+                            <i class="fas fa-play-circle"></i> Watch Preparation
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            displayNutrition(nutritionContent);
+
+            // Filter functionality
+            const filters = document.querySelectorAll('.category-filter');
+            filters.forEach(filter => {
+                filter.addEventListener('click', () => {
+                    filters.forEach(f => f.classList.remove('active'));
+                    filter.classList.add('active');
+                    
+                    const category = filter.textContent;
+                    if (category === 'All') {
+                        displayNutrition(nutritionContent);
+                    } else {
+                        const filtered = nutritionContent.filter(item => 
+                            item.mealType === category
+                        );
+                        displayNutrition(filtered);
+                    }
+                });
+            });
+
+            // Search functionality
+            const searchBox = document.querySelector('.search-box');
+            searchBox.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                const filtered = nutritionContent.filter(item =>
+                    item.title.toLowerCase().includes(searchTerm) ||
+                    item.description.toLowerCase().includes(searchTerm) ||
+                    item.ingredients.some(ing => ing.toLowerCase().includes(searchTerm))
+                );
+                displayNutrition(filtered);
+            });
+        });
+
+        function playVideo(videoUrl, title) {
+            const modal = `
+                <div class="modal fade" id="videoModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content bg-dark">
+                            <div class="modal-header border-0">
+                                <h5 class="modal-title text-white">${title}</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body p-0">
+                                <div class="ratio ratio-16x9">
+                                    <iframe src="${videoUrl}" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modal);
+            const videoModal = new bootstrap.Modal(document.getElementById('videoModal'));
+            videoModal.show();
+            document.getElementById('videoModal').addEventListener('hidden.bs.modal', function () {
+                this.remove();
+            });
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
