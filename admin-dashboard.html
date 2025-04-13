@@ -284,8 +284,8 @@
             const admissions = safeGetItem('admissions');
             
             const modeStats = {
-                online: admissions.filter(a => a.mode === 'online').length,
-                offline: admissions.filter(a => a.mode === 'offline').length
+                online: admissions.filter(a => a.trainingMode === 'online').length,
+                offline: admissions.filter(a => a.trainingMode === 'offline').length
             };
         
             let html = `
@@ -306,18 +306,18 @@
             `;
         
             admissions.reverse().forEach(admission => {
-                const packageStatus = getPackageStatusStyle(admission.package);
-                const modeIcon = admission.mode === 'online' ? 'fas fa-laptop' : 'fas fa-dumbbell';
-                const modeBadge = admission.mode === 'online' ? 'bg-info' : 'bg-warning';
+                const packageStatus = getPackageStatusStyle(admission.membership);
+                const modeIcon = admission.trainingMode === 'online' ? 'fas fa-laptop' : 'fas fa-dumbbell';
+                const modeBadge = admission.trainingMode === 'online' ? 'bg-info' : 'bg-warning';
                 
                 html += `
                     <div class="user-card">
                         <div class="d-flex justify-content-between align-items-center">
                             <h4><i class="fas fa-user"></i> ${admission.name}</h4>
                             <div>
-                                <span class="badge ${packageStatus.class}">${admission.package}</span>
+                                <span class="badge ${packageStatus.class}">${admission.membership}</span>
                                 <span class="badge ${modeBadge} ms-2">
-                                    <i class="${modeIcon}"></i> ${admission.mode ? admission.mode.charAt(0).toUpperCase() + admission.mode.slice(1) : 'Not Specified'}
+                                    <i class="${modeIcon}"></i> ${admission.trainingMode ? admission.trainingMode.charAt(0).toUpperCase() + admission.trainingMode.slice(1) : 'Not Specified'}
                                 </span>
                                 ${admission.status ? 
                                     `<span class="badge bg-${admission.status === 'approved' ? 'success' : 'danger'} ms-2">${admission.status}</span>` : 

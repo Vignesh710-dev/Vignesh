@@ -336,7 +336,7 @@
                     <a class="dropdown-item" href="#memory">Improved Memory</a>
                 </div>
             </div>
-                <a class="nav-link mr-3" href="admission.html">Admission</a>
+                <a class="nav-link mr-3" href="admission-form.html">Admission</a>
                 <a class="nav-link mr-3" href="contact.html">Contacts</a>
                 <a class="nav-link mr-3" href="admin-dashboard.html" id="adminDashboard" style="display: none;">Admin Dashboard</a>
                 
@@ -752,8 +752,149 @@
     </div>
 
     <!-- Add this after your BMI Calculator section -->
+    <style>
+        /* ... existing styles ... */
+    
+        #admissionSection {
+            background-color: #f8f9fa;
+            padding: 40px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    
+        #admissionSection h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+    
+        #admissionSection p {
+            color: #555;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+    
+        #admissionSection .form-group label {
+            color: #333;
+            font-weight: bold;
+        }
+    
+        #admissionSection .form-control {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+    
+        #admissionSection .btn-danger {
+            background-color: #c11b3c;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+    
+        #admissionSection .btn-danger:hover {
+            background-color: #a10f2a;
+        }
+    </style>
 
-  
+    <div class="container3 pt-4 pb-5">
+        <p class="f-p text-center">If you would like to join us,pleas apply here</p>
+        <h1 class="threed-heading mb-4 text-center">Admission</h1>
+        <div class="container" data-aos="zoom-in" data-aos-duration="800">
+          <div class="row justify-content-center">
+            <div class="col-sm-12 col-md-8 col-lg-6 box2">
+              <form id="contactForm" onsubmit="submitForm(event)" class="p-3">
+                <div class="form-group">
+                  <label for="name" style="color: aliceblue;">Name</label>
+                  <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="email" style="color: aliceblue;">Email address</label>
+                  <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="phone" style="color: aliceblue;">Phone</label>
+                  <input type="tel" class="form-control" id="phone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="city" style="color: aliceblue;">City</label>
+                  <input type="text" class="form-control" id="city" name="city" required>
+                </div>
+                <div class="form-group">
+                    <label for="gender" style="color: aliceblue;">Gender</label>
+                    <select class="form-control" id="gender" name="gender" required>
+                        <option value="">Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="membership" style="color: aliceblue;">Membership Type</label>
+                    <select class="form-control" id="membership" name="membership" required>
+                        <option value="">Select Package</option>
+                        <option value="basic">Basic (₹999/month)</option>
+                        <option value="standard">Standard (₹1,499/month)</option>
+                        <option value="premium">Premium (₹1,999/month)</option>
+                        <option value="elite">Elite (₹2,499/month)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="trainingMode" style="color: aliceblue;">Training Mode</label>
+                    <select class="form-control" id="trainingMode" name="trainingMode" required>
+                        <option value="">Select Mode</option>
+                        <option value="online">Online</option>
+                        <option value="offline">Offline</option>
+                    </select>
+                </div>
+           
+                
+                <div class="text-center mt-4">
+                  <button type="submit" class="btn btn-danger btn-lg">Join Now</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+      <script>
+        function submitForm(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+        
+            // Send data to the server
+            fetch('https://your-server-endpoint.com/api/admissions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    alert('Admission details submitted successfully!');
+                } else {
+                    alert('Failed to submit admission details.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while submitting the form.');
+            });
+        }
+        </script>
 
 <!-- Add this script before the closing body tag -->
 <script>
@@ -852,7 +993,7 @@ function getAIRecommendation() {
 }
 </script>
       
-<div class="container3 pt-4 pb-5" id="aiAnalyzer">
+<div class="container2 pt-4 pb-5" id="aiAnalyzer">
   <p class="f-p text-center">AI-Powered Fitness Analysis</p>
   <h1 class="threed-heading mb-4 text-center">Smart Fitness Advisor</h1>
   <div class="container" data-aos="zoom-in" data-aos-duration="800">
@@ -918,6 +1059,7 @@ function getAIRecommendation() {
                   </div>
               </div>
           </div>
+          
 
           <!-- Quick Links -->
          <!-- Chatbot Container -->
@@ -1170,6 +1312,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+
           <!-- Contact Info -->
           <div class="col-lg-4 col-md-6  col-sm-12 mb-4">
               <div class="footer-widget">
@@ -1529,7 +1672,66 @@ function validateAndSubmitForm(event) {
           });
       }
   </script>
-</body>
+<script>
+    function submitForm(event) {
+        event.preventDefault();
+        
+        const formData = new FormData(event.target);
+        const data = Object.fromEntries(formData.entries());
+        data.timestamp = new Date().toISOString(); // Add a timestamp for sorting
+    
+        // Retrieve existing admissions from localStorage
+        const admissions = JSON.parse(localStorage.getItem('admissions') || '[]');
+        admissions.push(data);
+    
+        // Save updated admissions back to localStorage
+        localStorage.setItem('admissions', JSON.stringify(admissions));
+    
+        alert('Admission details submitted successfully!');
+        event.target.reset(); // Reset the form after submission
+    }
+    </script>
+    <script>
+        function submitForm(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+            data.timestamp = new Date().toISOString(); // Add a timestamp for sorting
+        
+            // Show loading state
+            Swal.fire({
+                title: 'Submitting...',
+                text: 'Please wait while we process your application.',
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                willOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+        
+            // Simulate form submission delay
+            setTimeout(() => {
+                // Retrieve existing admissions from localStorage
+                const admissions = JSON.parse(localStorage.getItem('admissions') || '[]');
+                admissions.push(data);
+        
+                // Save updated admissions back to localStorage
+                localStorage.setItem('admissions', JSON.stringify(admissions));
+        
+                // Close loading state and show success message
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Your admission details have been submitted successfully.',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#28a745'
+                });
+        
+                event.target.reset(); // Reset the form after submission
+            }, 2000); // Simulate a 2-second delay for form submission
+        }
+        </script>
 
 
               <script>
