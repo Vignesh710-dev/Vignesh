@@ -176,3 +176,145 @@
     </script>
 </body>
 </html>
+
+<head>
+    <!-- Add these new styles after existing styles -->
+    <style>
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .trainer-profile {
+            background: #2a2a2a;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            margin: 30px 0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .comparison-table th {
+            background: #ff4d4d;
+            padding: 15px;
+            color: white;
+        }
+
+        .comparison-table td {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px;
+        }
+
+        .faq-section {
+            margin: 40px 0;
+        }
+
+        .faq-item {
+            background: #2a2a2a;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<!-- Add after the programs section and before the closing container div -->
+<div class="row mt-5">
+    <!-- Plan Comparison -->
+    <div class="col-12" data-aos="fade-up">
+        <h2 class="text-center mb-4">Plan Comparison</h2>
+        <div class="table-responsive">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Features</th>
+                        <th>Basic</th>
+                        <th>Standard</th>
+                        <th>Premium</th>
+                        <th>Elite</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Price</td>
+                        <td>₹999/month</td>
+                        <td>₹1499/month</td>
+                        <td>₹1999/month</td>
+                        <td>₹2499/month</td>
+                    </tr>
+                    <tr>
+                        <td>Workout Videos</td>
+                        <td>✓</td>
+                        <td>✓</td>
+                        <td>✓</td>
+                        <td>✓</td>
+                    </tr>
+                    <tr>
+                        <td>Live Sessions</td>
+                        <td>✗</td>
+                        <td>2/month</td>
+                        <td>8/month</td>
+                        <td>Unlimited</td>
+                    </tr>
+                    <tr>
+                        <td>Nutrition Plan</td>
+                        <td>✗</td>
+                        <td>✓</td>
+                        <td>✓</td>
+                        <td>Custom</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="col-12 mt-5">
+        <h2 class="text-center mb-4">Success Stories</h2>
+        <div class="row">
+            <div class="col-md-4" data-aos="fade-up">
+                <div class="testimonial-card">
+                    <img src="path/to/user1.jpg" alt="User" class="rounded-circle mb-3" width="60">
+                    <h5>Rahul Sharma</h5>
+                    <p>"Lost 15kg in 3 months with the Premium plan. The trainers are amazing!"</p>
+                    <div class="text-warning">★★★★★</div>
+                </div>
+            </div>
+            <!-- Add more testimonials as needed -->
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="col-12 mt-5 faq-section">
+        <h2 class="text-center mb-4">Frequently Asked Questions</h2>
+        <div class="faq-item" onclick="this.classList.toggle('active')">
+            <h5>How do the live sessions work?</h5>
+            <div class="faq-answer" style="display: none;">
+                Live sessions are conducted via Zoom with certified trainers. You can schedule them according to your convenience.
+            </div>
+        </div>
+        <!-- Add more FAQ items -->
+    </div>
+</div>
+
+<!-- Add before closing body tag -->
+<script>
+    // Add this to your existing script
+    document.querySelectorAll('.faq-item').forEach(item => {
+        item.addEventListener('click', function() {
+            const answer = this.querySelector('.faq-answer');
+            answer.style.display = answer.style.display === 'none' ? 'block' : 'none';
+        });
+    });
+</script>

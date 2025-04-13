@@ -191,10 +191,14 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ml-auto">
                 <a class="nav-link active mr-3" href="#sectionhome">Home <span class="sr-only">(current)</span></a>
+                <!-- Add this after the Admission nav link -->
+<a class="nav-link mr-3" href="#bmiSection">BMI Calculator</a>
                 <div class="nav-item dropdown">
                   <a class="nav-link mr-3" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Features
                   </a>
+                  <!-- Add this after the Admission nav link -->
+
                   
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                       <a class="dropdown-item" href="#sectionfeatures">All Features</a>
@@ -221,6 +225,7 @@
                 
                 
             </div>
+            
             <a class="nav-link mr-2 membership-btn animate__animated animate__pulse animate__infinite"" href="payment.html">Membership</a>
             <a class="nav-link mr-2 logout-btn animate__animated animate__headShake animate__delay-2s animate__repeat-2" href="#" onclick="logout()">Logout</a>
 
@@ -608,14 +613,33 @@
           </div>
         </div>
       </div>
+      <div class="container2 pt-4 pb-5" id="bmiSection">
+        <p class="f-p text-center">Calculate Your Body Mass Index</p>
+        <h1 class="threed-heading mb-4 text-center">BMI Calculator</h1>
+        <div class="container" data-aos="zoom-in" data-aos-duration="800">
+            <div class="row justify-content-center">
+                <div class="col-sm-12 col-md-8 col-lg-6 box2">
+                    <div class="glass-box p-4">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-calculator fa-3x" style="color: #ff3c5f;"></i>
+                        </div>
+                        <p class="text-center mb-4" style="color: #ffffff;">Track your fitness progress with our BMI calculator</p>
+                        <a href="bmi-calculator.html" class="btn btn-danger btn-lg d-block mx-auto animated-submit-btn animate__animated animate__pulse" style="max-width: 200px;">
+                            Calculate BMI
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
       
-<div class="container2 pt-4 pb-5" id="admissionSection">
+<div class="container3 pt-4 pb-5" id="admissionSection">
   <p class="f-p text-center">If you would like to join us,pleas apply here</p>
   <h1 class="threed-heading mb-4 text-center">Admission</h1>
   <div class="container" data-aos="zoom-in" data-aos-duration="800">
     <div class="row justify-content-center">
-      <div class="col-sm-12 col-md-8 col-lg-6 box2">
+      <div class="col-sm-12 col-md-8 col-lg-6">
         <form id="contactForm" onsubmit="submitForm(event)" class="p-3">
           <div class="form-group">
             <label for="name" style="color: aliceblue;">Name</label>

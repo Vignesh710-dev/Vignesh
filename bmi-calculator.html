@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Add these in the head section -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator - Muvi Fitness</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            color: #ffffff;
+            min-height: 100vh;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        .calculator-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px auto;
+            max-width: 600px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .calculator-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .form-control {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #ff3c5f;
+            box-shadow: 0 0 20px rgba(255, 60, 95, 0.3);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(45deg, #ff3c5f, #ff8f6b);
+            border: none;
+            padding: 15px 40px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 60, 95, 0.4);
+        }
+
+        .result-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .bmi-category {
+            font-size: 1.3rem;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .recommendation {
+            background: rgba(255, 255, 255, 0.1);
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #ff3c5f;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        h2, h3, h4 {
+            color: white;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Modern styles for additional sections */
+        .btn-danger {
+            background: linear-gradient(45deg, #ff3c5f, #ff8f6b);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(255, 60, 95, 0.3);
+        }
+
+        .bg-dark {
+            background: rgba(255, 255, 255, 0.1) !important;
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .list-group-item {
+            background: rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            margin-bottom: 8px;
+            border-radius: 10px !important;
+            transition: all 0.3s ease;
+        }
+
+        .list-group-item:hover {
+            transform: translateX(10px);
+            background: rgba(255, 255, 255, 0.15) !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="calculator-container">
+            <h2 class="text-center mb-4">BMI Calculator</h2>
+            <form id="bmiForm">
+                <div class="mb-3">
+                    <label for="weight" class="form-label">Weight (kg)</label>
+                    <input type="number" class="form-control" id="weight" required>
+                </div>
+                <div class="mb-3">
+                    <label for="height" class="form-label">Height (cm)</label>
+                    <input type="number" class="form-control" id="height" required>
+                </div>
+                <button type="submit" class="calculate-btn">Calculate BMI</button>
+            </form>
+
+            <div id="resultContainer" class="result-container">
+                <h3 class="text-center">Your Results</h3>
+                <div id="bmiValue" class="text-center h4 mt-3"></div>
+                <div id="bmiCategory" class="bmi-category"></div>
+                <div id="recommendation" class="recommendation"></div>
+            </div>
+        </div>
+    </div>
+    
+        <!-- Real-time BMI Status -->
+        <!-- First, update the exercise calculator section -->
+        
+        
+    <script>
+        // Calculate ideal weight range
+        function updateIdealWeight() {
+            const height = parseFloat(document.getElementById('height').value) / 100;
+            if (!isNaN(height)) {
+                const minWeight = (18.5 * height * height).toFixed(1);
+                const maxWeight = (24.9 * height * height).toFixed(1);
+                document.getElementById('idealWeightRange').innerHTML = 
+                    `<p>Healthy weight range: ${minWeight}kg - ${maxWeight}kg</p>`;
+            }
+        }
+    
+        // Calculate calories burned
+        function calculateCaloriesBurned() {
+            const weight = parseFloat(document.getElementById('weight').value);
+            const duration = parseFloat(document.getElementById('exerciseDuration').value);
+            const exercise = document.getElementById('exerciseType').value;
+            
+            const mets = {
+                running: 11.0,
+                cycling: 7.5,
+                swimming: 6.0,
+                walking: 3.5
+            };
+    
+            if (!isNaN(weight) && !isNaN(duration)) {
+                const calories = (mets[exercise] * 3.5 * weight * duration) / 200;
+                document.getElementById('caloriesBurned').innerHTML = 
+                    `<p>Calories burned: ${Math.round(calories)} kcal</p>`;
+            }
+        }
+    
+        // Progress tracking
+        let progressEntries = [];
+    
+        function addProgressEntry() {
+            const date = document.getElementById('progressDate').value;
+            const weight = parseFloat(document.getElementById('progressWeight').value);
+    
+            if (date && !isNaN(weight)) {
+                progressEntries.push({ date, weight });
+                progressEntries.sort((a, b) => new Date(a.date) - new Date(b.date));
+                updateProgressList();
+                updateProgressChart();
+            }
+        }
+    
+        function updateProgressList() {
+            const list = document.getElementById('progressList');
+            list.innerHTML = progressEntries.map(entry => 
+                `<div class="bg-dark p-2 mb-2 rounded">
+                    ${new Date(entry.date).toLocaleDateString()}: ${entry.weight}kg
+                </div>`
+            ).join('');
+        }
+    
+        // Event listeners
+        document.getElementById('height').addEventListener('input', updateIdealWeight);
+        document.getElementById('exerciseType').addEventListener('change', calculateCaloriesBurned);
+        document.getElementById('exerciseDuration').addEventListener('input', calculateCaloriesBurned);
+    
+        // Update existing BMI calculation
+        document.getElementById('bmiForm').addEventListener('submit', function(e) {
+            // ... existing code ...
+            updateIdealWeight();
+            calculateCaloriesBurned();
+        });
+    </script>
+
+    <script>
+        document.getElementById('bmiForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value) / 100; // Convert cm to meters
+            const bmi = weight / (height * height);
+            
+            const resultContainer = document.getElementById('resultContainer');
+            const bmiValue = document.getElementById('bmiValue');
+            const bmiCategory = document.getElementById('bmiCategory');
+            const recommendation = document.getElementById('recommendation');
+            
+            bmiValue.textContent = `Your BMI: ${bmi.toFixed(1)}`;
+            
+            let category, recommendationText, categoryColor;
+            
+            if (bmi < 18.5) {
+                category = "Underweight";
+                recommendationText = "Consider increasing your caloric intake and incorporating strength training. Consult with our nutrition expert for a personalized meal plan.";
+                categoryColor = "#17a2b8"; // Blue
+            } else if (bmi < 25) {
+                category = "Normal Weight";
+                recommendationText = "Maintain your healthy lifestyle! Consider our fitness programs to stay in shape and build strength.";
+                categoryColor = "#28a745"; // Green
+            } else if (bmi < 30) {
+                category = "Overweight";
+                recommendationText = "Focus on balanced nutrition and regular exercise. Our personal trainers can help you achieve your fitness goals.";
+                categoryColor = "#ffc107"; // Yellow
+            } else {
+                category = "Obese";
+                recommendationText = "It's recommended to consult with our health professionals. We offer specialized programs for sustainable weight loss.";
+                categoryColor = "#dc3545"; // Red
+            }
+            
+            bmiCategory.textContent = `Category: ${category}`;
+            bmiCategory.style.backgroundColor = categoryColor;
+            recommendation.innerHTML = `<strong>Recommendation:</strong><br>${recommendationText}`;
+            
+            resultContainer.style.display = 'block';
+            
+            // Show fitness recommendations
+            document.getElementById('workoutPlan').style.display = 'block';
+            generateWorkoutPlan(bmi);
+            calculateCalories();
+            initializeProgressChart();
+        });
+    </script>
+    <!-- Move all script tags here, right before closing body tag -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Update the existing BMI form submission handler
+        document.getElementById('bmiForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Existing BMI calculation code remains...
+            
+            // After setting resultContainer.style.display = 'block';
+            document.getElementById('workoutPlan').style.display = 'block';
+            generateWorkoutPlan(bmi);
+            calculateCalories();
+            initializeProgressChart();
+        });
+    
+        function generateWorkoutPlan(bmi) {
+            let workoutHTML = '<div class="list-group">';
+            if (bmi < 18.5) {
+                workoutHTML += `
+                    <div class="list-group-item bg-dark text-white">Monday: Chest & Triceps (Focus: Muscle Gain)</div>
+                    <div class="list-group-item bg-dark text-white">Tuesday: Back & Biceps (Heavy Lifting)</div>
+                    <div class="list-group-item bg-dark text-white">Wednesday: Legs & Core (Strength Building)</div>
+                    <div class="list-group-item bg-dark text-white">Thursday: Shoulders & Arms (Mass Building)</div>
+                    <div class="list-group-item bg-dark text-white">Friday: Full Body (Compound Exercises)</div>
+                `;
+            } else if (bmi > 25) {
+                workoutHTML += `
+                    <div class="list-group-item bg-dark text-white">Monday: HIIT & Upper Body</div>
+                    <div class="list-group-item bg-dark text-white">Tuesday: Cardio & Core</div>
+                    <div class="list-group-item bg-dark text-white">Wednesday: Circuit Training</div>
+                    <div class="list-group-item bg-dark text-white">Thursday: Strength & Cardio</div>
+                    <div class="list-group-item bg-dark text-white">Friday: Full Body Burn</div>
+                `;
+            } else {
+                workoutHTML += `
+                    <div class="list-group-item bg-dark text-white">Monday: Push Workout</div>
+                    <div class="list-group-item bg-dark text-white">Tuesday: Pull Workout</div>
+                    <div class="list-group-item bg-dark text-white">Wednesday: Legs & Core</div>
+                    <div class="list-group-item bg-dark text-white">Thursday: Upper Body</div>
+                    <div class="list-group-item bg-dark text-white">Friday: Lower Body</div>
+                `;
+            }
+            workoutHTML += '</div>';
+            document.getElementById('workoutDays').innerHTML = workoutHTML;
+        }
+    
+        function calculateCalories() {
+            try {
+                const weight = parseFloat(document.getElementById('weight').value);
+                const height = parseFloat(document.getElementById('height').value);
+                const age = parseFloat(document.getElementById('age').value) || 25;
+                const activityLevel = parseFloat(document.getElementById('activityLevel').value) || 1.375;
+                
+                if (isNaN(weight) || isNaN(height) || isNaN(age)) {
+                    throw new Error('Please enter valid numbers');
+                }
+                
+                const bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+                const tdee = bmr * activityLevel;
+                
+                let calorieHTML = `
+                    <p>Maintenance Calories: ${Math.round(tdee)} kcal/day</p>
+                    <p>Weight Loss: ${Math.round(tdee - 500)} kcal/day</p>
+                    <p>Weight Gain: ${Math.round(tdee + 500)} kcal/day</p>
+                `;
+                document.getElementById('calorieInfo').innerHTML = calorieHTML;
+            } catch (error) {
+                console.error('Error calculating calories:', error);
+                document.getElementById('calorieInfo').innerHTML = '<p class="text-danger">Error calculating calories. Please check your inputs.</p>';
+            }
+        }
+    
+        function initializeProgressChart() {
+            const ctx = document.getElementById('progressChart').getContext('2d');
+            const currentWeight = parseFloat(document.getElementById('weight').value);
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Start', 'Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                    datasets: [{
+                        label: 'Weight Progress',
+                        data: [currentWeight, null, null, null, null],
+                        borderColor: '#ff4d4d',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            grid: { color: '#333' },
+                            ticks: { color: '#fff' }
+                        },
+                        x: {
+                            grid: { color: '#333' },
+                            ticks: { color: '#fff' }
+                        }
+                    },
+                    plugins: {
+                        legend: { labels: { color: '#fff' } }
+                    }
+                }
+            });
+        }
+    
+        function setGoal() {
+            const currentWeight = parseFloat(document.getElementById('weight').value);
+            const targetWeight = parseFloat(document.getElementById('targetWeight').value);
+            
+            if (targetWeight) {
+                const difference = Math.abs(currentWeight - targetWeight);
+                const direction = currentWeight > targetWeight ? 'lose' : 'gain';
+                alert(`Goal set! You want to ${direction} ${difference.toFixed(1)} kg`);
+            }
+        }
+    </script>
+</body>
+</html>
